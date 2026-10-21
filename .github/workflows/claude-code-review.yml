@@ -1,0 +1,72 @@
+name: Claude PR review
+
+# An AI review of every pull request that is ready for review, as in
+# template-web. template-web calls the shared workflow in 8xsocial/8x-moad;
+# that repository is private to the 8xsocial organization, so a repository in
+# another organization (this template, and every play cloned from it) cannot
+# call it. The job it runs is inlined here instead, action pins included.
+#
+# It needs one repository (or organization) secret: CLAUDE_CODE_OAUTH_TOKEN.
+# Without it the job still runs and passes, doing nothing, so a fresh clone
+# gets no red check. Draft PRs are skipped (docs/rules/pull-requests.md), and
+# PRs from forks receive no secrets and skip the same way.
+#
+# It never blocks a merge: continue-on-error keeps an outage upstream from
+# turning a PR red. The review lands as PR comments.
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+
+concurrency:
+  group: claude-review-${{ github.repository }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+    steps:
+      # `secrets` is not available in a job-level `if`, so the presence check
+      # is a step, and every later step keys off its output.
+      - name: Check for Claude subscription token
+        id: check
+        env:
+          HAS_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}
+        run: |
+          echo "enabled=$HAS_TOKEN" >> "$GITHUB_OUTPUT"
+          if [ "$HAS_TOKEN" != "true" ]; then
+            echo "CLAUDE_CODE_OAUTH_TOKEN is not set for this repository; skipping the review."
+          fi
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        if: steps.check.outputs.enabled == 'true'
+        with:
+          # 0, not 1: a shallow checkout has no merge base with the base
+          # branch, so `git diff origin/main...HEAD`, which the reviewer is
+          # told to run, fails with "no merge base".
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@9c5ddab2e6d17b83ea679153b31f1d5f023cf636 # v1.0.217
+        if: steps.check.outputs.enabled == 'true'
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          track_progress: true
+          claude_args: >-
+            --allowedTools "Bash(git diff:*),Bash(git log:*),Bash(git show:*)"
+          prompt: |
+            Review this PR for correctness bugs, security issues, regressions,
+            and performance problems. Follow the repository's AGENTS.md and
+            CLAUDE.md instructions, and the rules in docs/rules/ they link to.
+            Hold the three non-negotiables in AGENTS.md to the letter: events
+            registered before the feature, the Play Stats API contract, and
+            money or entitlement writes on the server only. For changes under
+            apps/mobile, say whether the change ships as an OTA update or needs
+            a store build, and check it against docs/rules/store-review.md.
+            Prioritize actionable defects introduced by this PR; do not leave
+            praise-only comments. Review directly without subagents or
+            parallel/background tasks.

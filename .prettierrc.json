@@ -1,0 +1,18 @@
+{
+	"useTabs": true,
+	"semi": false,
+	"singleQuote": true,
+	"trailingComma": "none",
+	"printWidth": 100,
+	"plugins": ["prettier-plugin-tailwindcss"],
+	"overrides": [
+		{
+			"files": "apps/web/**",
+			"options": { "tailwindConfig": "./apps/web/tailwind.config.ts" }
+		},
+		{
+			"files": "apps/mobile/**",
+			"options": { "tailwindConfig": "./apps/mobile/tailwind.config.js" }
+		}
+	]
+}

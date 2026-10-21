@@ -1,0 +1,1375 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Tokens are CSS variables emitted from packages/brand into <head> (see
+ * src/app/layout.tsx), scoped by <html data-preset data-scheme>. Colours are
+ * channels: rgb(var(--c-<role>) / var(--c-<role>-a, 1)). Prefer the Tailwind
+ * utilities (bg-surface, text-ink-secondary, bg-brand text-on-brand…); reach
+ * for the raw variables only where a utility cannot go. No hex values here.
+ *
+ * Motion reads the preset's own easing and durations (--ease-out, --dur-*,
+ * --stagger-step, --rise), so dusk moves calmly and daylight crisply from the
+ * same classes. The web-only values below are derived from those, never typed.
+ */
+
+@layer base {
+	/* The bare `ring` utility's colour (Tailwind's default is a stock blue). */
+	*,
+	::before,
+	::after {
+		--tw-ring-color: rgb(var(--c-border-focus) / 0.5);
+	}
+
+	:root {
+		/* Web-only motion, derived from the preset's own durations. */
+		--dur-rise: calc(var(--dur-slow) * 1.45);
+		--dur-deal: calc(var(--dur-slow) * 1.35);
+		/* Nav height plus breathing room, for in-page anchors under the fixed nav. */
+		--nav-clearance: 5.5rem;
+	}
+
+	/* Display line heights are a web decision (the mobile scale is px). The
+	   serif needs air for its ascenders; the grotesque at 800 wants to be dense. */
+	[data-preset='dusk'] {
+		--lh-display: 1.02;
+		--lh-heading: 1.1;
+		/* Blended against the painted ground (see Ground.tsx), so it textures the
+		   midnight without lifting it toward slate. */
+		--grain-opacity: 0.3;
+		--grain-blend: soft-light;
+	}
+	[data-preset='daylight'] {
+		--lh-display: 0.94;
+		--lh-heading: 1.02;
+		--grain-opacity: 0.2;
+		--grain-blend: multiply;
+	}
+
+	/* The phone's bezel: near-black in the ground's hue on dark, ink on light. */
+	[data-scheme='dark'] {
+		--device-bezel: rgb(var(--c-shadow-tint));
+	}
+	[data-scheme='light'] {
+		--device-bezel: rgb(var(--c-text-primary));
+	}
+
+	html {
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-rendering: optimizeLegibility;
+		font-optical-sizing: auto;
+		scroll-behavior: smooth;
+		scroll-padding-top: var(--nav-clearance);
+		accent-color: rgb(var(--c-brand-fill));
+		caret-color: rgb(var(--c-brand-ink));
+		scrollbar-color: rgb(var(--c-border-active) / var(--c-border-active-a, 1)) transparent;
+	}
+
+	body {
+		background-color: rgb(var(--c-bg));
+		color: rgb(var(--c-text-primary));
+		font-family: var(--font-text);
+		font-feature-settings:
+			'kern' 1,
+			'liga' 1,
+			'calt' 1;
+		letter-spacing: -0.006em;
+	}
+
+	/* Headlines speak in the preset's display face (serif for dusk, grotesque for daylight). */
+	h1,
+	h2 {
+		font-family: var(--font-display);
+	}
+
+	::selection {
+		background-color: rgb(var(--c-brand-fill));
+		color: rgb(var(--c-on-brand));
+	}
+
+	input::placeholder,
+	textarea::placeholder {
+		color: rgb(var(--c-text-tertiary));
+		opacity: 1;
+	}
+
+	:focus-visible {
+		outline: 2px solid rgb(var(--c-border-focus));
+		outline-offset: 3px;
+	}
+
+	a {
+		text-underline-offset: 0.2em;
+		text-decoration-thickness: from-font;
+	}
+
+	summary {
+		list-style: none;
+	}
+	summary::-webkit-details-marker {
+		display: none;
+	}
+}
+
+@layer components {
+	/* ── Type roles on the web ────────────────────────────────────────────────
+	 * Family, weight and tracking come from the preset's role scale; sizes are
+	 * the web's (the brand scale is phone-sized). */
+	.t-hero {
+		font-family: var(--type-display-hero-family);
+		font-weight: var(--type-display-hero-weight);
+		letter-spacing: var(--type-display-hero-tracking);
+		font-size: clamp(2.75rem, 1.55rem + 4.95vw, 6rem);
+		line-height: var(--lh-display);
+	}
+	.t-display {
+		font-family: var(--type-display-family);
+		font-weight: var(--type-display-weight);
+		letter-spacing: var(--type-display-tracking);
+		font-size: clamp(2.1rem, 1.3rem + 3.3vw, 4.4rem);
+		line-height: var(--lh-display);
+	}
+	.t-h1 {
+		font-family: var(--type-h1-family);
+		font-weight: var(--type-h1-weight);
+		letter-spacing: var(--type-h1-tracking);
+		font-size: clamp(2rem, 1.35rem + 2.4vw, 3.35rem);
+		line-height: var(--lh-heading);
+	}
+	.t-h2 {
+		font-family: var(--type-h1-family);
+		font-weight: var(--type-h1-weight);
+		letter-spacing: var(--type-h1-tracking);
+		font-size: clamp(1.7rem, 1.2rem + 1.7vw, 2.6rem);
+		line-height: var(--lh-heading);
+	}
+	.t-h3 {
+		font-family: var(--type-h3-family);
+		font-weight: var(--type-h3-weight);
+		letter-spacing: var(--type-h3-tracking);
+		font-size: clamp(1.2rem, 1.05rem + 0.45vw, 1.45rem);
+		line-height: 1.2;
+	}
+	.t-lead {
+		font-size: clamp(1.075rem, 1rem + 0.35vw, 1.25rem);
+		line-height: 1.55;
+		letter-spacing: var(--type-lead-tracking);
+	}
+	.t-number {
+		font-family: var(--type-number-family);
+		font-weight: var(--type-number-weight);
+		letter-spacing: var(--type-number-tracking);
+		font-variant-numeric: tabular-nums;
+	}
+
+	/* ── Materials ──────────────────────────────────────────────────────── */
+
+	/* Film grain (dusk) / paper tooth (daylight). A layer, placed first in a
+	   `relative` container whose content sits in a `relative` wrapper above it. */
+	.grain {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		opacity: var(--grain-opacity);
+		mix-blend-mode: var(--grain-blend);
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+	}
+
+	/* ── Operate surfaces (admin) ── kept as they were; the marketing site uses
+	   `.pane` and its own buttons below. */
+	.card {
+		@apply rounded-2xl border border-line-soft bg-surface shadow-card;
+	}
+	.hairline {
+		border-color: rgb(var(--c-border-hairline) / var(--c-border-hairline-a, 1));
+	}
+	.btn-primary {
+		@apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-5 py-3 font-semibold text-on-brand transition-colors hover:bg-brand-hover;
+	}
+	.btn-ghost {
+		@apply inline-flex items-center justify-center gap-2 rounded-xl border border-line-active px-5 py-3 font-semibold text-ink transition-colors hover:bg-surface2;
+	}
+
+	/* A raised pane: surface, hairline, top-lit edge on dark grounds. */
+	.pane {
+		@apply rounded-card border border-line-soft bg-surface shadow-card;
+	}
+	[data-scheme='dark'] .pane,
+	.pane[data-scheme='dark'] {
+		background-image: linear-gradient(
+			180deg,
+			rgb(var(--c-border-glass) / calc(var(--c-border-glass-a, 1) * 0.5)),
+			transparent 42%
+		);
+		box-shadow:
+			inset 0 1px 0 rgb(var(--c-border-glass) / var(--c-border-glass-a, 1)),
+			var(--shadow-card);
+	}
+
+	/* ── The phone ──────────────────────────────────────────────────────────
+	 * `--screen` is the rendered screen width as a plain number (px). The app
+	 * screen is laid out at its true 393 × 852 pt and scaled to that width, so
+	 * its type and spacing are the app's own, at any size, with no JS. */
+	.device {
+		--bezel: calc(var(--screen) * 0.034px);
+		position: relative;
+		/* Never stretched by a flex or grid parent: the bezel is the screen's size. */
+		align-self: flex-start;
+		height: max-content;
+		flex: none;
+		width: calc(var(--screen) * 1px + var(--bezel) * 2);
+		padding: var(--bezel);
+		border-radius: calc(var(--screen) * 0.14px + var(--bezel));
+		background: var(--device-bezel);
+		box-shadow:
+			0 0 0 1px rgb(var(--c-border-active) / var(--c-border-active-a, 1)),
+			inset 0 0 0 1px rgb(var(--c-border-glass) / var(--c-border-glass-a, 1)),
+			var(--shadow-overlay);
+	}
+	.device-screen {
+		position: relative;
+		width: calc(var(--screen) * 1px);
+		aspect-ratio: 393 / 852;
+		overflow: hidden;
+		border-radius: calc(var(--screen) * 0.14px);
+		background: rgb(var(--c-bg));
+		isolation: isolate;
+	}
+	.device-canvas {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 393px;
+		height: 852px;
+		transform: scale(calc(var(--screen) / 393));
+		transform-origin: 0 0;
+	}
+
+	/* ── The week's skies ───────────────────────────────────────────────────
+	 * A scene carries `data-sky` (its hour); src/lib/sky.ts gives each hour its
+	 * gradient and its sun or moon as custom properties, from the app's own
+	 * colours. Stars come out in the evening, clouds go in at night. */
+	.sky-fill {
+		position: absolute;
+		inset: 0;
+		background: var(--sky);
+	}
+	.sky-stars {
+		display: none;
+	}
+	[data-sky='evening'] > .sky-stars,
+	[data-sky='night'] > .sky-stars {
+		display: block;
+	}
+	.sky-cloud {
+		opacity: 0.8;
+	}
+	[data-sky='evening'] > .sky-clouds > .sky-cloud {
+		opacity: 0.22;
+	}
+	[data-sky='night'] > .sky-clouds {
+		display: none;
+	}
+	/* Centred by margins, so `transform` (the mouse's depth) and `translate`
+	   (the scroll's arc) are both free to move it. */
+	.sky-body,
+	.sky-glow {
+		--body-size: clamp(2.75rem, 5.5vw, 5rem);
+		position: absolute;
+		left: var(--sky-body-x);
+		top: var(--sky-body-y);
+		width: var(--body-size);
+		aspect-ratio: 1;
+		margin: calc(var(--body-size) / -2) 0 0 calc(var(--body-size) / -2);
+		border-radius: 999px;
+	}
+	.sky-body {
+		background: var(--sky-body);
+	}
+	/* The sun's or moon's own light around it, breathing slowly. */
+	.sky-glow {
+		--body-size: clamp(9rem, 16vw, 15rem);
+		background: radial-gradient(
+			circle,
+			color-mix(in srgb, var(--sky-body) 16%, transparent) 0%,
+			color-mix(in srgb, var(--sky-body) 5%, transparent) 40%,
+			transparent 66%
+		);
+	}
+	[data-scheme='light'] > .sky-glow {
+		opacity: 0.6;
+	}
+	.sky-star-faint {
+		opacity: 0.35;
+	}
+	/* One star crossing the sky, then a long wait (in .sky-stars, so only at
+	   dusk and at night). */
+	.sky-shooting {
+		position: absolute;
+		left: 62%;
+		top: 9%;
+		width: 7rem;
+		height: 1.5px;
+		border-radius: 999px;
+		opacity: 0;
+		transform: rotate(-24deg);
+	}
+
+	/* Life in the sky (landing/SkyLife.tsx): each kind at its own hour. */
+	.sky-life {
+		position: absolute;
+		inset: 0;
+		z-index: -20;
+		display: none;
+		pointer-events: none;
+	}
+	[data-sky='evening'] > [data-life='firefly'],
+	[data-sky='morning'] > [data-life='mote'],
+	[data-sky='afternoon'] > [data-life='bird'] {
+		display: block;
+	}
+	.life-firefly,
+	.life-mote {
+		position: absolute;
+		border-radius: 999px;
+		background: currentColor;
+	}
+	.life-firefly {
+		width: 4px;
+		height: 4px;
+		box-shadow:
+			0 0 6px 2px currentColor,
+			0 0 18px 4px color-mix(in srgb, currentColor 35%, transparent);
+	}
+	.life-mote {
+		width: 3px;
+		height: 3px;
+		opacity: 0;
+		box-shadow: 0 0 6px 1px currentColor;
+	}
+	.life-bird {
+		position: absolute;
+		left: 0;
+		transform: translateX(-12vw);
+	}
+	/* The night's moon is a crescent: the same disc with a bite out of it. */
+	[data-sky='night'] > .sky-body {
+		-webkit-mask-image: radial-gradient(circle at 70% 36%, transparent 56%, black 58%);
+		mask-image: radial-gradient(circle at 70% 36%, transparent 56%, black 58%);
+	}
+
+	/* ── The pets on the page ───────────────────────────────────────────────
+	 * Sized by the screen, so day 1 keeps its pet, its care row and the
+	 * waitlist inside one viewport on a short laptop and on a phone. */
+	.hero-pet {
+		--size: min(clamp(11rem, 41svh, 26rem), 58vw);
+		width: var(--size);
+		height: var(--size);
+	}
+	/* Where a pet stands (Stand in landing/stage.tsx): the app's ground band, a
+	   soft strip under its feet that fades out at both ends. */
+	.pet-stand {
+		position: relative;
+		isolation: isolate;
+	}
+	.pet-ground {
+		position: absolute;
+		z-index: -1;
+		left: -38%;
+		right: -38%;
+		bottom: 4%;
+		height: 11%;
+		border-radius: 999px;
+		background: radial-gradient(
+			50% 50% at 50% 50%,
+			rgb(var(--c-shadow-tint) / 0.42),
+			rgb(var(--c-shadow-tint) / 0) 100%
+		);
+	}
+	[data-scheme='light'] .pet-ground {
+		background: radial-gradient(
+			50% 50% at 50% 50%,
+			rgb(var(--c-text-primary) / 0.13),
+			rgb(var(--c-text-primary) / 0) 100%
+		);
+	}
+
+	.scene-pet {
+		width: min(62vw, 18.75rem);
+		height: min(62vw, 18.75rem);
+	}
+	.scene-pet-large {
+		width: min(72vw, 23rem);
+		height: min(72vw, 23rem);
+	}
+
+	/* Days 4 and 6 (landing/TimeLapse.tsx): a day held on one screen while the
+	   page scrolls `--lapse-screens` screens past it. */
+	.time-lapse {
+		height: calc(var(--lapse-screens, 3) * 100svh);
+	}
+	.time-lapse-screen {
+		height: 100svh;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		/* Until the still line takes its place after hydration: no tall blank. */
+		.time-lapse {
+			height: auto;
+		}
+	}
+	.lapse-body {
+		display: block;
+		width: clamp(2.75rem, 5.5vw, 5rem);
+		aspect-ratio: 1;
+		border-radius: 999px;
+		transform: translate(-50%, -50%);
+	}
+	.lapse-moon {
+		-webkit-mask-image: radial-gradient(circle at 70% 36%, transparent 56%, black 58%);
+		mask-image: radial-gradient(circle at 70% 36%, transparent 56%, black 58%);
+	}
+	/* As large as day 1's pet, and still clear of the line on a short screen. */
+	.lapse-pet {
+		--size: min(clamp(11rem, 40svh, 25rem), 56vw);
+		width: var(--size);
+		height: var(--size);
+	}
+	/* Mochi's cushion, under its feet. */
+	.lapse-cushion {
+		position: absolute;
+		z-index: -1;
+		left: 6%;
+		right: 6%;
+		bottom: 3%;
+		height: 15%;
+		border-radius: 999px;
+		background: radial-gradient(
+			60% 70% at 50% 35%,
+			color-mix(in srgb, var(--cushion) 62%, rgb(var(--c-bg))),
+			color-mix(in srgb, var(--cushion) 34%, rgb(var(--c-bg)))
+		);
+		box-shadow: inset 0 -0.35rem 0 color-mix(in srgb, var(--cushion) 22%, rgb(var(--c-bg)));
+	}
+	/* The ball it rolled about in the day, at the cushion's right edge. */
+	.lapse-ball {
+		position: absolute;
+		right: -14%;
+		bottom: 4%;
+		width: clamp(1.75rem, 5svh, 2.6rem);
+		aspect-ratio: 1;
+	}
+	/* The afternoon's sunbeam, falling from the upper left across the pet. */
+	.lapse-sunbeam {
+		position: absolute;
+		left: -10%;
+		top: -20%;
+		width: 70%;
+		height: 150%;
+		transform: rotate(-28deg);
+		transform-origin: top left;
+		background: linear-gradient(
+			90deg,
+			transparent,
+			color-mix(in srgb, var(--beam) 24%, transparent) 45%,
+			color-mix(in srgb, var(--beam) 12%, transparent) 60%,
+			transparent
+		);
+		mix-blend-mode: screen;
+		pointer-events: none;
+	}
+	.lapse-life {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	/* Day 6 (landing/FriendsRail.tsx): the row starts on the content column's
+	   left edge, as the app's screens do, and runs off to the right. */
+	.friends-row {
+		padding-inline: max(1.25rem, calc((100vw - 1120px) / 2 + 2rem));
+		scrollbar-width: none;
+	}
+	.friends-row::-webkit-scrollbar {
+		display: none;
+	}
+	.friend-pet {
+		width: 8.5rem;
+		height: 8.5rem;
+	}
+	@media (min-width: 640px) {
+		.friend-pet {
+			width: 10rem;
+			height: 10rem;
+		}
+	}
+	.code-pet {
+		width: 3.75rem;
+		height: 3.75rem;
+	}
+	.friend-card {
+		transition:
+			transform var(--dur-base) var(--ease-out),
+			box-shadow var(--dur-base) var(--ease-out);
+	}
+	@media (hover: hover) {
+		.friend-card:hover {
+			transform: translateY(-6px) rotate(-0.6deg);
+			box-shadow: var(--shadow-raised);
+		}
+	}
+	[data-scheme='light'] .ground-stars {
+		display: none;
+	}
+
+	/* The row of real screens: it starts on the content column's left edge and
+	   runs off the right of the page, so the phone cut by the edge says "more". */
+	.app-rail {
+		padding-inline: max(1.25rem, calc((100vw - 1120px) / 2 + 2rem));
+		scroll-padding-inline: max(1.25rem, calc((100vw - 1120px) / 2 + 2rem));
+		scrollbar-width: none;
+		/* The last phone in view fades at the page's edge: there is more. */
+		-webkit-mask-image: linear-gradient(90deg, black calc(100% - 6rem), transparent);
+		mask-image: linear-gradient(90deg, black calc(100% - 6rem), transparent);
+	}
+	.app-rail::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Day 1's headline: the hero role, capped so the sentence holds one line
+	   from a laptop up. */
+	.hero-line {
+		font-size: clamp(2.75rem, 1.55rem + 4.95vw, 5.25rem);
+	}
+	/* Day 5's lock-screen hour. */
+	.lock-clock {
+		font-size: clamp(4.4rem, 3rem + 7vw, 6rem);
+		line-height: 1;
+		letter-spacing: -0.04em;
+	}
+	/* Day 7: the pet's line at the size of a headline. It is the pet speaking,
+	   so it stays in the text face. */
+	.missed-words {
+		font-size: clamp(2rem, 1.2rem + 3.1vw, 3.35rem);
+		line-height: 1.12;
+		letter-spacing: -0.022em;
+	}
+
+	/* A section's own light on dusk: one low wash near its head, centred inside
+	   the box and fading to nothing before every edge, so neighbouring sections
+	   never meet on a seam. */
+	.section-wash {
+		background: radial-gradient(
+			46% 22rem at var(--wash-x, 12%) 24rem,
+			rgb(var(--c-brand-glow) / calc(var(--c-brand-glow-a, 1) * 0.42)),
+			rgb(var(--c-brand-glow) / 0) 72%
+		);
+	}
+}
+
+@layer utilities {
+	/*
+	 * compat: was gradient text. Emphasis now comes from colour and weight —
+	 * gradient text is retired. Renders as the accent ink.
+	 */
+	.text-gradient {
+		color: rgb(var(--c-brand-ink));
+	}
+
+	/* The dusk sky over the first viewport: two washes of the accent that fade
+	   to nothing well inside the box, so the section never ends on a seam. */
+	.atmosphere {
+		background:
+			radial-gradient(
+				48% 58% at 76% 46%,
+				rgb(var(--c-brand-glow) / calc(var(--c-brand-glow-a, 1) * 0.6)),
+				rgb(var(--c-brand-glow) / 0) 72%
+			),
+			radial-gradient(
+				40% 38% at 8% 0%,
+				rgb(var(--c-brand-glow) / calc(var(--c-brand-glow-a, 1) * 0.32)),
+				rgb(var(--c-brand-glow) / 0) 70%
+			);
+	}
+
+	/* Soft atmospheric wash of the accent behind hero elements (not a halo). */
+	.accent-glow {
+		background: radial-gradient(
+			60% 60% at 50% 0%,
+			rgb(var(--c-brand-glow) / var(--c-brand-glow-a, 1)) 0%,
+			rgb(var(--c-brand-glow) / 0) 70%
+		);
+	}
+
+	/* ── Entrances ─────────────────────────────────────────────────────────
+	 * CSS, so the first viewport never waits on hydration. Dusk dissolves out
+	 * of a blur; daylight rises crisp. */
+
+	/* A word rising out of its own clipped line. The padding extends the clip
+	   past the ascenders and descenders; the negative margin gives it back. */
+	.rise-clip {
+		display: inline-flex;
+		overflow: hidden;
+		vertical-align: bottom;
+		padding: 0.1em 0.05em 0.18em;
+		margin: -0.1em -0.05em -0.18em;
+	}
+	.word-rise {
+		display: inline-block;
+		animation: word-rise var(--dur-rise) var(--ease-out) both;
+		animation-delay: calc(var(--rise-delay, 0ms) + var(--i, 0) * var(--stagger-step));
+	}
+	[data-preset='dusk'] .word-rise {
+		animation-name: word-rise-dissolve;
+	}
+	/* A headline further down (WordRise `onView`): its words wait, paused at
+	   their start, until the Reveal around them arrives. Only while a script
+	   will reveal it, so a page whose JS fails still shows every word. */
+	@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+		.reveal:not(.is-visible) .rise-on-view .word-rise {
+			animation-play-state: paused;
+		}
+	}
+
+	.enter {
+		animation: enter var(--dur-rise) var(--ease-out) both;
+		animation-delay: var(--enter-delay, 0ms);
+	}
+	[data-preset='dusk'] .enter {
+		animation-name: enter-dissolve;
+	}
+
+	/* Scroll reveal: hidden only when a script will reveal it, so a page whose
+	   JS fails still shows everything. */
+	.reveal {
+		transition:
+			opacity var(--dur-rise) var(--ease-out),
+			transform var(--dur-rise) var(--ease-out),
+			filter var(--dur-rise) var(--ease-out);
+		transition-delay: var(--reveal-delay, 0ms);
+	}
+	@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+		.reveal:not(.is-visible) {
+			opacity: 0;
+			transform: translateY(calc(var(--rise) * 2));
+		}
+		[data-preset='dusk'] .reveal:not(.is-visible) {
+			filter: blur(10px);
+		}
+	}
+
+	/* A FAQ answer arriving. */
+	.faq-item[open] .faq-answer {
+		animation: enter var(--dur-base) var(--ease-out) both;
+	}
+	.faq-item[open] .faq-icon {
+		transform: rotate(45deg);
+	}
+
+	/* ── The week's motion ──────────────────────────────────────────────────
+	 * A pet breathes; a care action lifts it and sends up what it earned; a
+	 * bubble arrives from the pet's side; bars move while it speaks. All of it
+	 * holds still under Reduce Motion (the block at the end of this file). */
+	.pet-breathe {
+		transform-origin: 50% 92%;
+		animation: pet-breathe 4.4s var(--ease-in-out) infinite alternate;
+	}
+	/* Two names for one lift, alternated per tap, so a new tap restarts it
+	   without remounting the pet. */
+	.pet-lift {
+		animation: pet-lift var(--dur-slow) var(--ease-out) both;
+	}
+	.pet-lift-again {
+		animation: pet-lift-again var(--dur-slow) var(--ease-out) both;
+	}
+
+	/* A live pet (pet/LivePet.tsx): its eyes turn toward the pointer, by the
+	   two variables LivePet writes, and open eyes blink on the pet's own beat. */
+	.pet-gaze {
+		transform: translate(calc(var(--look-x, 0) * 1px), calc(var(--look-y, 0) * 1px));
+		transition: transform var(--dur-base) var(--ease-out);
+	}
+	.live-pet .pet-blink {
+		transform-box: fill-box;
+		transform-origin: center;
+		animation: pet-blink var(--blink-period, 5s) var(--blink-delay, 0s) infinite;
+	}
+	/* The face it had, fading off the new one. */
+	.pet-mood-out {
+		animation: fade-out var(--dur-slow) var(--ease-out) both;
+	}
+	/* Day 1: Mochi lands on its ground as the page opens, and its needs fill in. */
+	.pet-arrive {
+		transform-origin: 50% 92%;
+		animation: pet-arrive calc(var(--dur-rise) * 1.2) var(--ease-out) 240ms both;
+	}
+	/* `backwards`: once filled, the bar is the value's again and moves on its transition. */
+	.meter-fill {
+		animation: meter-fill var(--dur-rise) var(--ease-out) backwards;
+	}
+	/* The button the pet wants, once, when nothing has been tapped. */
+	.care-nudge {
+		animation: care-nudge 900ms var(--ease-in-out) both;
+	}
+	.burst-piece {
+		opacity: 0;
+		animation: burst-float 1100ms var(--ease-out) both;
+	}
+	.bubble-in {
+		transform-origin: 0% 100%;
+		animation: bubble-in var(--dur-base) var(--ease-out) both;
+	}
+	.sound-bars > span {
+		height: 4px;
+	}
+	.sound-bars[data-playing] > span {
+		animation: sound-bar 620ms var(--ease-in-out) infinite alternate;
+		animation-delay: calc(var(--i, 0) * -170ms);
+	}
+	.thinking-dots > span {
+		width: 6px;
+		height: 6px;
+		border-radius: 999px;
+		background: rgb(var(--c-text-tertiary));
+		animation: thinking 720ms var(--ease-in-out) infinite alternate;
+	}
+	.thinking-dots > span:nth-child(2) {
+		animation-delay: 180ms;
+	}
+	.thinking-dots > span:nth-child(3) {
+		animation-delay: 360ms;
+	}
+
+	/* Day 7: the line and the pet arrive together, once, when the scene is
+	   reached. Hidden only while a script will bring them in. */
+	.missed-line,
+	.missed-pet {
+		transition:
+			opacity var(--dur-rise) var(--ease-out),
+			transform var(--dur-rise) var(--ease-out),
+			filter var(--dur-rise) var(--ease-out);
+	}
+	.missed-line {
+		transform-origin: 100% 100%;
+	}
+	.missed-pet {
+		transition-delay: calc(var(--dur-base) * 0.5);
+	}
+	@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+		.missed:not([data-arrived]) .missed-line {
+			opacity: 0;
+			transform: translateY(1.5rem) scale(0.96);
+			filter: blur(10px);
+		}
+		.missed:not([data-arrived]) .missed-pet {
+			opacity: 0;
+			transform: translateY(1rem);
+		}
+	}
+
+	/* The evening sky's ambient motion, as the app's SkyScene: stars twinkle
+	   (staggered), the sun's rays breathe. Still under Reduce Motion. */
+	.sky-twinkle {
+		animation: sky-twinkle 3.2s var(--ease-in-out) infinite alternate both;
+		animation-delay: calc(var(--i, 0) * 370ms);
+	}
+	.sky-rays {
+		animation: sky-rays 4s var(--ease-in-out) infinite alternate both;
+	}
+
+	/* The week's skies have depth: while a scene scrolls past, its stars lag
+	   behind (far), its clouds run a little ahead (near), and its sun or moon
+	   climbs along its arc; the clouds also drift on their own. Scroll-driven
+	   CSS (Chrome, Safari 26), so it runs off the main thread; elsewhere the
+	   sky is still, as it was. Nothing of it under Reduce Motion: a
+	   scroll-linked animation ignores the reduced durations below. */
+	@media (prefers-reduced-motion: no-preference) {
+		.sky-cloud {
+			animation: cloud-drift 38s var(--ease-in-out) infinite alternate both;
+		}
+		.sky-cloud:nth-child(2) {
+			animation-duration: 47s;
+			animation-direction: alternate-reverse;
+		}
+		.sky-glow {
+			animation: glow-breathe 6s var(--ease-in-out) infinite alternate both;
+		}
+		.sky-shooting {
+			animation: shooting-star 11s linear infinite;
+			animation-delay: var(--shoot-delay, 2s);
+		}
+		.life-firefly {
+			animation:
+				firefly-drift var(--drift-s) var(--ease-in-out) var(--delay) infinite alternate both,
+				firefly-glow var(--glow-s) var(--ease-in-out) var(--delay) infinite alternate both;
+		}
+		.life-mote {
+			animation: mote-rise var(--rise-s) linear var(--delay) infinite both;
+		}
+		.life-bird {
+			animation: bird-fly var(--fly-s) linear var(--delay) infinite both;
+		}
+		.life-bird > svg {
+			animation: bird-flap 0.42s var(--ease-in-out) infinite alternate;
+		}
+
+		/* The mouse gives a scene depth (landing/PointerDepth.tsx): the far
+		   stars move least, the sun or moon more, the life in the sky most. */
+		.scene > .sky-stars,
+		.scene > .sky-body,
+		.scene > .sky-glow,
+		.scene > .sky-life {
+			transition: transform 1.1s var(--ease-out);
+		}
+		.scene > .sky-stars {
+			transform: translate(calc(var(--px, 0) * -8px), calc(var(--py, 0) * -6px));
+		}
+		.scene > .sky-body,
+		.scene > .sky-glow {
+			transform: translate(calc(var(--px, 0) * -16px), calc(var(--py, 0) * -12px));
+		}
+		.scene > .sky-life {
+			transform: translate(calc(var(--px, 0) * -26px), calc(var(--py, 0) * -18px));
+		}
+
+		@supports (animation-timeline: view()) {
+			.scene {
+				view-timeline: --scene block;
+			}
+			.scene > .sky-stars,
+			.scene > .sky-clouds,
+			.scene > .sky-body,
+			.scene > .sky-glow {
+				animation-timing-function: linear;
+				animation-fill-mode: both;
+				animation-timeline: --scene;
+			}
+			.scene > .sky-stars {
+				animation-name: sky-depth-far;
+			}
+			.scene > .sky-clouds {
+				animation-name: sky-depth-near;
+			}
+			.scene > .sky-body,
+			.scene > .sky-glow {
+				animation-name: sky-body-arc;
+			}
+		}
+
+		/* A live pet (pet/LivePet.tsx): the tail wags at the mood's pace, the
+		   pet hops when the mouse arrives, and its mood floats up from it. */
+		.live-pet .pet-tail {
+			transform-box: fill-box;
+			transform-origin: 0% 100%;
+			animation: tail-wag 2.6s var(--ease-in-out) infinite alternate;
+		}
+		.live-pet[data-mood='happy'] .pet-tail {
+			animation-duration: 0.55s;
+		}
+		.live-pet[data-mood='sad'] .pet-tail,
+		.live-pet[data-mood='sleepy'] .pet-tail {
+			animation-duration: 5s;
+		}
+		.live-pet[data-mood='sad'] .pet-breathe {
+			animation-duration: 6.5s;
+		}
+		@media (hover: hover) {
+			.live-pet:not([data-mood='sleepy']) {
+				transform-origin: 50% 92%;
+			}
+			.live-pet:not([data-mood='sleepy']):hover {
+				animation: pet-hop 620ms var(--ease-out);
+			}
+			.live-pet:not([data-mood='sleepy']):hover .pet-tail {
+				animation-duration: 0.4s;
+			}
+		}
+		.pet-zzz > span {
+			animation: zzz-float 3.9s var(--ease-out) infinite;
+			animation-delay: calc(var(--i, 0) * 1.3s);
+		}
+		.pet-hearts > svg {
+			animation: heart-float 4.6s var(--ease-out) infinite;
+			animation-delay: calc(0.8s + var(--i, 0) * 2.3s);
+		}
+		.lamp-glow {
+			animation: glow-breathe 5s var(--ease-in-out) infinite alternate both;
+		}
+	}
+
+	/* What floats up from a pet: placed over its head, still and hidden
+	   without motion (the face says the mood anyway). */
+	.pet-zzz,
+	.pet-hearts {
+		position: absolute;
+		pointer-events: none;
+	}
+	.pet-zzz {
+		left: 66%;
+		top: 12%;
+		font-family: var(--font-display);
+		font-weight: 600;
+		line-height: 1;
+	}
+	.pet-zzz > span {
+		position: absolute;
+		left: 0;
+		top: 0;
+		opacity: 0;
+		font-size: calc(0.95rem + var(--i, 0) * 0.4rem);
+	}
+	.pet-hearts {
+		left: 50%;
+		top: 8%;
+	}
+	.pet-hearts > svg {
+		position: absolute;
+		width: 1.15rem;
+		height: 1.15rem;
+		opacity: 0;
+	}
+	/* The app's warm lamp behind the pet, in the evening and at night. */
+	.lamp-glow {
+		position: absolute;
+		z-index: -1;
+		left: 50%;
+		top: 48%;
+		width: 150%;
+		aspect-ratio: 1;
+		translate: -50% -50%;
+		border-radius: 999px;
+		pointer-events: none;
+		background: radial-gradient(
+			circle,
+			color-mix(in srgb, var(--lamp) 26%, transparent) 0%,
+			color-mix(in srgb, var(--lamp) 8%, transparent) 40%,
+			transparent 68%
+		);
+		transition: opacity var(--dur-slow) var(--ease-out);
+	}
+	[data-scheme='light'] .lamp-glow {
+		opacity: 0;
+	}
+
+	/* Groups that arrive one by one: the children of a `.stagger` inside a
+	   Reveal (or a Reveal that is one) rise with a little overshoot, each a
+	   beat after the one before. Hidden only while a script will bring them. */
+	@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+		.stagger > * {
+			transition:
+				opacity var(--dur-rise) var(--ease-out),
+				transform var(--dur-rise) cubic-bezier(0.34, 1.4, 0.64, 1);
+		}
+		.reveal:not(.is-visible) .stagger > *,
+		.reveal.stagger:not(.is-visible) > * {
+			opacity: 0;
+			transform: translateY(1.4rem) scale(0.97);
+		}
+		/* The group itself does not move: its children do. */
+		.reveal.stagger:not(.is-visible) {
+			opacity: 1;
+			transform: none;
+			filter: none;
+		}
+		.stagger > :nth-child(2) {
+			transition-delay: 80ms;
+		}
+		.stagger > :nth-child(3) {
+			transition-delay: 160ms;
+		}
+		.stagger > :nth-child(4) {
+			transition-delay: 240ms;
+		}
+		.stagger > :nth-child(5) {
+			transition-delay: 320ms;
+		}
+		.stagger > :nth-child(6) {
+			transition-delay: 400ms;
+		}
+		.stagger > :nth-child(n + 7) {
+			transition-delay: 480ms;
+		}
+	}
+
+	/* Scroll-driven reading and arriving (Chrome, Safari 26; elsewhere, and
+	   under Reduce Motion, everything is simply there). */
+	@media (prefers-reduced-motion: no-preference) {
+		@supports (animation-timeline: view()) {
+			/* A lead paragraph's words light up as they reach reading height. */
+			.scrub-word {
+				display: inline-block;
+				animation: scrub-word linear both;
+				animation-timeline: view();
+				animation-range: entry 70% cover 42%;
+			}
+			/* The real app's phones tilt up into place as the section arrives,
+			   each a little after the one before. */
+			#app {
+				view-timeline: --app block;
+			}
+			#app-rail {
+				perspective: 1400px;
+			}
+			.rail-phone {
+				transform-origin: 50% 100%;
+				animation: rail-tilt linear both;
+				animation-timeline: --app;
+				animation-range: entry 55% cover 52%;
+			}
+			.rail-phone:nth-child(2) {
+				animation-range: entry 65% cover 56%;
+			}
+			.rail-phone:nth-child(3) {
+				animation-range: entry 75% cover 60%;
+			}
+			.rail-phone:nth-child(n + 4) {
+				animation-range: entry 85% cover 64%;
+			}
+			/* The night after the week drifts slowly behind its sections. */
+			.ground-stars {
+				animation: sky-depth-far linear both;
+				animation-timeline: view();
+			}
+		}
+	}
+
+	/* The mobile menu panel. */
+	.menu-panel {
+		animation: menu-in var(--dur-base) var(--ease-out) both;
+		transform-origin: top right;
+	}
+}
+
+/* 130%: far enough that no cap or ascender sits in the clip's bottom padding
+   before the word starts to move. */
+@keyframes word-rise {
+	from {
+		transform: translateY(130%);
+	}
+}
+@keyframes word-rise-dissolve {
+	from {
+		transform: translateY(130%);
+		filter: blur(8px);
+	}
+}
+@keyframes enter {
+	from {
+		opacity: 0;
+		transform: translateY(var(--rise));
+	}
+}
+@keyframes enter-dissolve {
+	from {
+		opacity: 0;
+		transform: translateY(var(--rise));
+		filter: blur(10px);
+	}
+}
+@keyframes pet-breathe {
+	to {
+		transform: scale(1.012, 1.024);
+	}
+}
+@keyframes pet-lift {
+	35% {
+		transform: translateY(-12px);
+	}
+}
+@keyframes pet-lift-again {
+	35% {
+		transform: translateY(-12px);
+	}
+}
+@keyframes pet-blink {
+	0%,
+	93%,
+	100% {
+		transform: scaleY(1);
+	}
+	95.5% {
+		transform: scaleY(0.12);
+	}
+}
+@keyframes fade-out {
+	to {
+		opacity: 0;
+	}
+}
+@keyframes pet-arrive {
+	from {
+		opacity: 0;
+		transform: translateY(-2.5rem);
+	}
+	45% {
+		opacity: 1;
+		transform: translateY(0) scale(1.05, 0.93);
+	}
+	70% {
+		transform: translateY(-0.4rem) scale(0.98, 1.03);
+	}
+	to {
+		transform: none;
+	}
+}
+@keyframes meter-fill {
+	from {
+		width: 0;
+	}
+}
+@keyframes care-nudge {
+	15%,
+	45% {
+		transform: rotate(-3deg) scale(1.03);
+	}
+	30%,
+	60% {
+		transform: rotate(3deg) scale(1.03);
+	}
+	80% {
+		transform: none;
+	}
+}
+@keyframes burst-float {
+	from {
+		opacity: 0;
+		transform: translate(0, 0) scale(0.6);
+	}
+	18% {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+		transform: translate(var(--drift, 0px), -6rem) scale(1);
+	}
+}
+@keyframes bubble-in {
+	from {
+		opacity: 0;
+		transform: translateY(6px) scale(0.96);
+	}
+}
+@keyframes sound-bar {
+	to {
+		height: 16px;
+	}
+}
+@keyframes thinking {
+	from {
+		opacity: 0.3;
+		transform: translateY(1px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(-2px);
+	}
+}
+@keyframes sky-twinkle {
+	from {
+		opacity: 0.12;
+	}
+	to {
+		opacity: 0.5;
+	}
+}
+@keyframes sky-rays {
+	from {
+		opacity: 0.5;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes cloud-drift {
+	to {
+		transform: translateX(3.5vw);
+	}
+}
+/* `translate`, not `transform`: the clouds drift and the sun is centred with
+   their own transforms, and the two compose. */
+@keyframes sky-depth-far {
+	from {
+		translate: 0 -7vh;
+	}
+	to {
+		translate: 0 7vh;
+	}
+}
+@keyframes sky-depth-near {
+	from {
+		translate: 0 5vh;
+	}
+	to {
+		translate: 0 -5vh;
+	}
+}
+@keyframes sky-body-arc {
+	from {
+		translate: -2.5vw 9vh;
+	}
+	to {
+		translate: 2.5vw -6vh;
+	}
+}
+@keyframes glow-breathe {
+	from {
+		opacity: 0.7;
+	}
+	to {
+		opacity: 1;
+	}
+}
+/* The streak runs for the first 7% of the loop, then the sky waits. */
+@keyframes shooting-star {
+	0% {
+		opacity: 0;
+		transform: rotate(-24deg) translateX(0) scaleX(0.3);
+	}
+	2% {
+		opacity: 0.9;
+	}
+	7% {
+		opacity: 0;
+		transform: rotate(-24deg) translateX(-26rem) scaleX(1);
+	}
+	100% {
+		opacity: 0;
+		transform: rotate(-24deg) translateX(-26rem) scaleX(1);
+	}
+}
+@keyframes firefly-drift {
+	0% {
+		transform: translate(0, 0);
+	}
+	50% {
+		transform: translate(1.6rem, -1.1rem);
+	}
+	100% {
+		transform: translate(-0.8rem, -2.2rem);
+	}
+}
+@keyframes firefly-glow {
+	from {
+		opacity: 0.15;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes mote-rise {
+	0% {
+		opacity: 0;
+		transform: translateY(0);
+	}
+	20%,
+	70% {
+		opacity: 0.85;
+	}
+	100% {
+		opacity: 0;
+		transform: translate(1.2rem, -16vh);
+	}
+}
+@keyframes bird-fly {
+	from {
+		transform: translate(-12vw, 0);
+	}
+	50% {
+		transform: translate(50vw, -2.5vh);
+	}
+	to {
+		transform: translate(112vw, 1vh);
+	}
+}
+@keyframes bird-flap {
+	to {
+		transform: scaleY(0.45);
+	}
+}
+@keyframes tail-wag {
+	from {
+		transform: rotate(-6deg);
+	}
+	to {
+		transform: rotate(5deg);
+	}
+}
+@keyframes pet-hop {
+	30% {
+		transform: translateY(-16px) scale(0.98, 1.03);
+	}
+	55% {
+		transform: translateY(0) scale(1.04, 0.96);
+	}
+	75% {
+		transform: none;
+	}
+}
+@keyframes zzz-float {
+	0% {
+		opacity: 0;
+		transform: translate(0, 0) rotate(0deg);
+	}
+	20% {
+		opacity: 0.95;
+	}
+	100% {
+		opacity: 0;
+		transform: translate(1.8rem, -3.4rem) rotate(-12deg);
+	}
+}
+@keyframes heart-float {
+	0% {
+		opacity: 0;
+		transform: translate(-50%, 0) scale(0.5);
+	}
+	12% {
+		opacity: 0.95;
+	}
+	55% {
+		opacity: 0;
+		transform: translate(calc(-50% + (var(--i, 0) * 2 - 1) * 1.2rem), -3.4rem) scale(1);
+	}
+	100% {
+		opacity: 0;
+	}
+}
+@keyframes scrub-word {
+	from {
+		opacity: 0.2;
+	}
+}
+@keyframes rail-tilt {
+	from {
+		opacity: 0.3;
+		transform: translateY(5rem) rotateX(22deg) rotateY(-16deg) scale(0.9);
+	}
+}
+@keyframes menu-in {
+	from {
+		opacity: 0;
+		transform: translateY(-6px) scale(0.97);
+	}
+}
+
+/*
+ * Reduced motion: nothing travels, scales, blurs or wipes. What carries meaning
+ * stays as an instant change: a pet's face, a need's bar, the line it says.
+ * Motion's own components honour the same setting through
+ * <MotionConfig reducedMotion="user">.
+ */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+	/* A burst ends invisible, so it simply does not show. */
+	.burst-piece {
+		display: none;
+	}
+}

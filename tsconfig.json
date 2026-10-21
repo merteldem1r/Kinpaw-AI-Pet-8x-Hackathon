@@ -1,0 +1,6 @@
+{
+	"//": "Root tsconfig is for editor tooling only. Each workspace (apps/web, apps/mobile, packages/brand) has its own tsconfig and is typechecked independently via `npm run typecheck`.",
+	"extends": "./tsconfig.base.json",
+	"include": [],
+	"exclude": ["node_modules", "**/node_modules", "**/dist", "**/.next", "**/.expo"]
+}

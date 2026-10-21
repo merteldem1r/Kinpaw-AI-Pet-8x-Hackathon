@@ -1,0 +1,3671 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Tell me about you — screen options</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--bg: #090f1e;
+				--well: #0d1525;
+				--surface: #121b2d;
+				--s2: #192336;
+				--s3: #222d42;
+				--tp: #eff2f9;
+				--tb: #d2d8e2;
+				--ts: #b4bbc9;
+				--tt: #8e96a5;
+				--ink: #f2b66b;
+				--on: #131b2e;
+				--dim: rgba(242, 182, 107, 0.16);
+				--bd: rgba(242, 182, 107, 0.4);
+				--hair: rgba(239, 242, 249, 0.08);
+				--soft: rgba(239, 242, 249, 0.12);
+			}
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				background: #060a15;
+				color: var(--tb);
+				font:
+					15px/1.5 Inter,
+					system-ui,
+					sans-serif;
+			}
+			main {
+				max-width: 1240px;
+				margin: 0 auto;
+				padding: 56px 24px 96px;
+			}
+			.serif {
+				font-family: 'Source Serif 4', Georgia, serif;
+				font-weight: 600;
+				color: var(--tp);
+				letter-spacing: -0.01em;
+			}
+			header h1 {
+				font:
+					600 40px/1.1 'Source Serif 4',
+					Georgia,
+					serif;
+				color: var(--tp);
+				margin: 0 0 12px;
+			}
+			header p {
+				max-width: 68ch;
+				color: var(--ts);
+				margin: 0;
+			}
+			h2.section {
+				font:
+					600 26px/1.2 'Source Serif 4',
+					Georgia,
+					serif;
+				color: var(--tp);
+				margin: 72px 0 6px;
+			}
+			p.sub {
+				color: var(--ts);
+				margin: 0 0 28px;
+				max-width: 72ch;
+			}
+			.opts {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+				gap: 28px;
+			}
+			.states {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+				gap: 36px 28px;
+			}
+			figure {
+				margin: 0;
+			}
+			.phwrap {
+				display: flex;
+				justify-content: center;
+			}
+			figcaption {
+				padding: 16px 6px 0;
+				max-width: 330px;
+				margin: 0 auto;
+			}
+			figcaption h3 {
+				margin: 6px 0 4px;
+				color: var(--tp);
+				font: 600 17px/1.3 Inter;
+			}
+			figcaption p {
+				margin: 0;
+				color: var(--ts);
+				font-size: 14px;
+			}
+			.tag,
+			.num {
+				display: inline-block;
+				font: 600 11px/1 Inter;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--ink);
+			}
+			.opt.rec .phone {
+				box-shadow:
+					0 0 0 2px var(--ink),
+					0 30px 80px -20px rgba(242, 182, 107, 0.35);
+			}
+			.opt.rec .tag::after {
+				content: ' · recommended';
+				color: var(--tp);
+			}
+			/* phone */
+			.phone {
+				position: relative;
+				width: 300px;
+				height: 640px;
+				border-radius: 44px;
+				background: var(--bg);
+				overflow: hidden;
+				border: 1px solid var(--soft);
+				box-shadow: 0 30px 70px -25px rgba(0, 0, 0, 0.8);
+				font-family: Inter, sans-serif;
+				color: var(--tb);
+			}
+			.phone::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px) 0 0/3px 3px;
+				pointer-events: none;
+			}
+			.status {
+				height: 44px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 0 26px;
+				font: 600 13px Inter;
+				color: var(--tp);
+				position: relative;
+				z-index: 3;
+			}
+			.notch {
+				width: 90px;
+				height: 26px;
+				border-radius: 14px;
+				background: #000;
+			}
+			.bat {
+				width: 24px;
+				height: 11px;
+				border: 1.5px solid var(--tp);
+				border-radius: 3px;
+				opacity: 0.8;
+			}
+			.skip {
+				position: absolute;
+				top: 50px;
+				right: 18px;
+				z-index: 4;
+				background: none;
+				border: 0;
+				color: var(--ts);
+				font: 500 14px Inter;
+				padding: 10px 6px;
+			}
+			.skip.glass {
+				background: rgba(255, 255, 255, 0.12);
+				border: 1px solid rgba(255, 255, 255, 0.18);
+				border-radius: 999px;
+				padding: 7px 14px;
+				color: #fff;
+				backdrop-filter: blur(8px);
+			}
+			.eyebrow {
+				margin: 0 0 6px;
+				font: 600 11px/1 Inter;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				color: var(--ink);
+			}
+			.eyebrow.dim {
+				color: var(--tt);
+			}
+			.headA {
+				padding: 14px 24px 0;
+			}
+			.headA h2 {
+				margin: 0;
+				font-size: 29px;
+				line-height: 1.08;
+			}
+			.headA.tight {
+				padding-top: 18px;
+			}
+			h2.sm {
+				font-size: 24px !important;
+				line-height: 1.15;
+				margin: 0;
+			}
+			.stageA {
+				position: relative;
+				height: 218px;
+				display: flex;
+				align-items: flex-end;
+				justify-content: center;
+			}
+			.stageA.small {
+				height: 200px;
+				justify-content: flex-start;
+				padding-left: 22px;
+			}
+			.stageA.home {
+				height: 330px;
+				margin-top: 6px;
+			}
+			.glow {
+				position: absolute;
+				width: 300px;
+				height: 300px;
+				left: 50%;
+				bottom: -70px;
+				transform: translateX(-44%);
+				background: radial-gradient(closest-side, rgba(242, 182, 107, 0.3), transparent);
+			}
+			.glow.strong {
+				background: radial-gradient(closest-side, rgba(242, 182, 107, 0.42), transparent);
+			}
+			.glow.dim {
+				opacity: 0.45;
+			}
+			.pulse {
+				animation: pulse 1.6s ease-in-out infinite;
+			}
+			@keyframes pulse {
+				50% {
+					opacity: 0.55;
+					transform: translateX(-44%) scale(0.94);
+				}
+			}
+			.pet {
+				position: relative;
+				z-index: 1;
+				flex: none;
+			}
+			.pet svg {
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+			.pet.lean {
+				transform: rotate(-4deg) translateY(4px);
+			}
+			.bubble {
+				position: absolute;
+				z-index: 2;
+				background: var(--s2);
+				border: 1px solid var(--hair);
+				border-radius: 18px;
+				padding: 10px 13px;
+				color: var(--tb);
+				font: 14px/1.4 Inter;
+				max-width: 172px;
+				box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.7);
+			}
+			.bubble p {
+				margin: 0;
+			}
+			.bubble.small {
+				font-size: 13px;
+				padding: 8px 11px;
+				max-width: 150px;
+			}
+			.bubble.wide {
+				max-width: 212px;
+			}
+			.bubble.tr {
+				top: 0;
+				right: 14px;
+				border-bottom-left-radius: 6px;
+			}
+			.bubble.lt {
+				left: auto;
+				position: relative;
+				border-bottom-left-radius: 6px;
+			}
+			.bubble.rb {
+				position: relative;
+				border-bottom-left-radius: 6px;
+				align-self: flex-start;
+				margin-top: 8px;
+			}
+			.brow {
+				margin-top: 8px;
+				padding-top: 8px;
+				border-top: 1px solid var(--hair);
+				color: var(--ink);
+				font: 500 13px Inter;
+				display: flex;
+				gap: 6px;
+				align-items: center;
+			}
+			.paws {
+				display: inline-flex;
+				gap: 6px;
+			}
+			.paws i {
+				animation: paw 1.2s ease-in-out infinite;
+				display: inline-block;
+			}
+			.paws i:nth-child(2) {
+				animation-delay: 0.2s;
+			}
+			.paws i:nth-child(3) {
+				animation-delay: 0.4s;
+			}
+			@keyframes paw {
+				0%,
+				100% {
+					opacity: 0.3;
+					transform: none;
+				}
+				50% {
+					opacity: 1;
+					transform: translateY(-2px);
+				}
+			}
+			.hints {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 7px;
+				justify-content: center;
+				padding: 14px 18px 0;
+			}
+			.hint {
+				display: inline-flex;
+				align-items: center;
+				gap: 5px;
+				padding: 6px 10px;
+				border-radius: 999px;
+				border: 1px solid var(--soft);
+				color: var(--ts);
+				font: 500 12px Inter;
+				background: rgba(18, 27, 45, 0.6);
+				transition: 0.3s;
+			}
+			.hint.on {
+				background: var(--dim);
+				border-color: var(--bd);
+				color: var(--ink);
+			}
+			.hints.grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				padding: 12px 0 0;
+				justify-items: start;
+			}
+			.hints.grid .hint:last-child {
+				grid-column: 1/-1;
+			}
+			.microw {
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 58px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 28px;
+			}
+			.kb {
+				width: 46px;
+				height: 46px;
+				border-radius: 50%;
+				background: var(--surface);
+				border: 1px solid var(--soft);
+				display: grid;
+				place-items: center;
+			}
+			.kb.ghost {
+				visibility: hidden;
+			}
+			.micwrap {
+				position: relative;
+				width: 88px;
+				height: 88px;
+				display: grid;
+				place-items: center;
+			}
+			.ring {
+				position: absolute;
+				inset: 0;
+			}
+			.mic {
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+				border: 0;
+				background: linear-gradient(180deg, #f6c386, #eeaa58);
+				display: grid;
+				place-items: center;
+				box-shadow: 0 10px 30px -8px rgba(238, 170, 88, 0.55);
+			}
+			.micwrap.live .mic {
+				animation: breath 1.4s ease-in-out infinite;
+			}
+			@keyframes breath {
+				50% {
+					transform: scale(1.06);
+				}
+			}
+			.count {
+				position: absolute;
+				top: -6px;
+				right: -30px;
+				background: var(--s2);
+				border: 1px solid var(--bd);
+				color: var(--ink);
+				font: 600 11px Inter;
+				border-radius: 999px;
+				padding: 3px 7px;
+				font-variant-numeric: tabular-nums;
+			}
+			.miclabel {
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 36px;
+				margin: 0;
+				text-align: center;
+				color: var(--tp);
+				font: 500 13px Inter;
+			}
+			.foot {
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 14px;
+				margin: 0;
+				text-align: center;
+				color: var(--tt);
+				font: 12px Inter;
+			}
+			.foot.center {
+				bottom: 70px;
+			}
+			.words {
+				margin: 10px 22px 0;
+				padding: 8px 12px;
+				border-radius: 14px;
+				background: var(--s2);
+				border: 1px solid var(--bd);
+				font: 12px/1.4 Inter;
+				color: var(--tb);
+				text-align: center;
+				position: relative;
+				z-index: 3;
+			}
+			.words span::before {
+				content: '… ';
+			}
+			/* B */
+			.sky {
+				position: absolute;
+				inset: 0 0 auto 0;
+				height: 330px;
+				background: linear-gradient(180deg, #3d3a6b 0%, #8a5a86 45%, #e59a6b 80%, #6a4a6e 100%);
+			}
+			.stars {
+				position: absolute;
+				inset: 0 0 auto 0;
+				height: 260px;
+				background:
+					radial-gradient(#fff8 1px, transparent 1.5px) 0 0/37px 41px,
+					radial-gradient(#f6c38699 1.5px, transparent 2px) 13px 19px/71px 59px;
+				opacity: 0.7;
+			}
+			.petB {
+				position: absolute;
+				top: 150px;
+				left: 22px;
+				right: 16px;
+				display: flex;
+				align-items: flex-start;
+				gap: 4px;
+				z-index: 3;
+			}
+			.sheet {
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 272px;
+				bottom: 0;
+				background: var(--surface);
+				border-radius: 28px 28px 0 0;
+				border-top: 1px solid rgba(255, 255, 255, 0.12);
+				padding: 22px 22px 0;
+				z-index: 2;
+			}
+			.lead {
+				color: var(--ts);
+				font-size: 13.5px;
+				margin: 6px 0 0;
+			}
+			.sheet .microw {
+				bottom: 44px;
+			}
+			.sheet .miclabel {
+				bottom: 18px;
+			}
+			/* C */
+			.topC {
+				display: flex;
+				align-items: flex-end;
+				gap: 2px;
+				padding: 18px 18px 0;
+			}
+			.cTitle {
+				padding: 10px 22px 0;
+			}
+			.slots {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 8px;
+				padding: 14px 18px 0;
+			}
+			.slot {
+				display: flex;
+				align-items: center;
+				gap: 7px;
+				padding: 10px;
+				border-radius: 12px;
+				border: 1.5px dashed rgba(239, 242, 249, 0.16);
+				color: var(--tt);
+				font: 500 12px Inter;
+			}
+			.slotcount {
+				text-align: center;
+				color: var(--tt);
+				font-size: 12px;
+				margin: 10px 0 0;
+			}
+			/* review */
+			.review {
+				margin: 16px 20px 0;
+				padding: 14px 15px 12px;
+				border-radius: 18px;
+				background: var(--well);
+				border: 1px solid var(--soft);
+			}
+			.review p {
+				margin: 0;
+				color: var(--tp);
+				font: 15px/1.5 Inter;
+			}
+			.wc {
+				display: block;
+				margin-top: 8px;
+				color: var(--tt);
+				font-size: 12px;
+			}
+			.row2 {
+				display: flex;
+				gap: 10px;
+				padding: 12px 20px 0;
+			}
+			.row2 .secondary {
+				flex: 1;
+			}
+			.secondary {
+				height: 44px;
+				border-radius: 14px;
+				background: var(--dim);
+				border: 1px solid var(--bd);
+				color: var(--ink);
+				font: 600 14px Inter;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: 7px;
+				padding: 0 14px;
+			}
+			.reviewpet {
+				display: flex;
+				align-items: flex-end;
+				justify-content: center;
+				gap: 0;
+				margin-top: 14px;
+			}
+			.bottom {
+				position: absolute;
+				left: 20px;
+				right: 20px;
+				bottom: 22px;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+			.primary {
+				height: 54px;
+				border-radius: 999px;
+				border: 0;
+				background: linear-gradient(180deg, #f6c386, #eeaa58);
+				color: var(--on);
+				font: 600 16px Inter;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				box-shadow: 0 12px 30px -10px rgba(238, 170, 88, 0.55);
+			}
+			.bottom .secondary {
+				background: none;
+				border: 0;
+				color: var(--ts);
+			}
+			.consent {
+				margin: 0;
+				text-align: center;
+				color: var(--tt);
+				font: 12px/1.4 Inter;
+			}
+			/* result */
+			.facts {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 7px;
+				padding: 16px 18px 0;
+				justify-content: center;
+			}
+			.fact {
+				display: inline-flex;
+				align-items: center;
+				gap: 5px;
+				padding: 6px 6px 6px 9px;
+				border-radius: 999px;
+				background: var(--surface);
+				border: 1px solid var(--bd);
+				color: var(--tp);
+				font: 500 12px Inter;
+				white-space: nowrap;
+				animation: pop 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+				animation-delay: calc(var(--d) * 0.14s);
+			}
+			.fact b {
+				display: grid;
+				place-items: center;
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				background: rgba(239, 242, 249, 0.06);
+			}
+			.fact.arriving {
+				opacity: 0.55;
+				transform: translateY(6px) scale(0.96);
+			}
+			@keyframes pop {
+				from {
+					opacity: 0;
+					transform: translateY(10px) scale(0.9);
+				}
+			}
+			.facts.ghosts span {
+				width: 110px;
+				height: 32px;
+				border-radius: 999px;
+				background: linear-gradient(90deg, var(--surface), var(--s3), var(--surface));
+				background-size: 200% 100%;
+				animation: shim 1.4s linear infinite;
+			}
+			.facts.ghosts span:nth-child(2) {
+				width: 84px;
+			}
+			.facts.ghosts span:nth-child(3) {
+				width: 132px;
+			}
+			@keyframes shim {
+				to {
+					background-position: -200% 0;
+				}
+			}
+			/* result */
+			.resTop {
+				position: relative;
+				display: flex;
+				align-items: flex-end;
+				gap: 2px;
+				padding: 6px 16px 0;
+				height: 162px;
+			}
+			.resTop .glow {
+				left: 30%;
+				bottom: -120px;
+			}
+			.resTop .bubble {
+				max-width: 170px;
+				margin-bottom: 28px;
+			}
+			.facts.left {
+				justify-content: flex-start;
+			}
+			/* home */
+			.homesky {
+				position: absolute;
+				inset: 0 0 auto 0;
+				height: 420px;
+				background: linear-gradient(180deg, #141d38, #1b2748 50%, #24325a 80%, var(--bg));
+			}
+			.homehead {
+				position: relative;
+				padding: 18px 24px 0;
+			}
+			.homebar {
+				position: absolute;
+				left: 16px;
+				right: 16px;
+				bottom: 18px;
+				height: 64px;
+				border-radius: 22px;
+				background: var(--surface);
+				border: 1px solid var(--soft);
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+			}
+			.homebar span {
+				width: 22px;
+				height: 22px;
+				border-radius: 6px;
+				background: var(--s3);
+			}
+			/* decisions */
+			.decide {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+				gap: 20px;
+				margin-top: 8px;
+			}
+			.dcard {
+				background: #0c1324;
+				border: 1px solid var(--hair);
+				border-radius: 18px;
+				padding: 18px;
+			}
+			.dcard h3 {
+				margin: 0 0 4px;
+				color: var(--tp);
+				font: 600 16px Inter;
+			}
+			.dcard p {
+				margin: 0 0 12px;
+				color: var(--ts);
+				font-size: 14px;
+			}
+			.dcard ol {
+				margin: 0;
+				padding-left: 18px;
+				color: var(--tb);
+				font-size: 14px;
+			}
+			.dcard li {
+				margin: 4px 0;
+			}
+			.dcard li b {
+				color: var(--ink);
+				font-weight: 600;
+			}
+			@media (prefers-reduced-motion: reduce) {
+				* {
+					animation: none !important;
+				}
+			}
+		</style>
+	</head>
+	<body class="dark">
+		<main>
+			<header>
+				<p class="eyebrow">Kinpaw · v2 memory · Phase 4b</p>
+				<h1>Tell me about you</h1>
+				<p>
+					The step right after sign-in, before Home. The person speaks (or types) up to 60 words;
+					Mochi keeps up to 8 facts and remembers them from day one. Real pet drawing, real dusk
+					colours, real fonts. Pick a direction first; the full flow below is drawn in the
+					recommended one, and every state applies to any direction.
+				</p>
+			</header>
+
+			<h2 class="section">1 · Three directions for the main screen</h2>
+			<p class="sub">
+				The first look decides whether people talk or tap Skip. Each keeps Skip visible, voice
+				first, and "type instead" one tap away.
+			</p>
+			<div class="opts">
+				<figure class="opt rec">
+					<div class="phwrap">
+						<div class="phone" style="">
+							<div class="status">
+								<span>9:41</span><span class="notch"></span><span class="bat"></span>
+							</div>
+							<button class="skip">Skip</button>
+							<div class="headA">
+								<p class="eyebrow">One last thing</p>
+								<h2 class="serif">Tell Mochi<br />about you</h2>
+							</div>
+							<div class="stageA">
+								<div class="glow"></div>
+								<div class="bubble tr">
+									<p>I want to know you! Tell me a little about yourself.</p>
+								</div>
+								<div class="pet" style="width: 160px; height: 160px">
+									<svg viewBox="0 0 200 200" aria-hidden="true">
+										<ellipse cx="96" cy="185" rx="46" ry="6" fill="#000" opacity="0.35" />
+										<g transform="translate(96 118) scale(1.25)">
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#fbf1e0"
+												stroke-width="20"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="0"
+												cy="14"
+												rx="32"
+												ry="37"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="-13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="-24,-48 -19,-77 -3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="24,-48 19,-77 3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<circle
+												cx="0"
+												cy="-38"
+												r="26"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#e3914a"
+												stroke-width="10"
+												stroke-linecap="round"
+											/>
+											<ellipse cx="0" cy="14" rx="32" ry="37" fill="#e3914a" />
+											<polygon points="-24,-48 -19,-77 -3,-60" fill="#e3914a" />
+											<polygon points="24,-48 19,-77 3,-60" fill="#e3914a" />
+											<polygon points="-20,-52 -18,-70 -8,-58" fill="#c96f3a" />
+											<polygon points="20,-52 18,-70 8,-58" fill="#c96f3a" />
+											<circle cx="0" cy="-38" r="26" fill="#e3914a" />
+											<defs>
+												<clipPath id="c-happy">
+													<ellipse cx="0" cy="14" rx="34" ry="39" />
+													<circle cx="0" cy="-38" r="28" />
+												</clipPath>
+											</defs>
+											<g clip-path="url(#c-happy)">
+												<path
+													d="M-6 -63 L-4 -55 M0 -64 L0 -55 M6 -63 L4 -55 M-31 4 L-23 6 M-32 15 L-24 16 M31 4 L23 6 M32 15 L24 16"
+													fill="none"
+													stroke="#a85a24"
+													stroke-width="2.6"
+													stroke-linecap="round"
+												/>
+											</g>
+											<ellipse cx="0" cy="24" rx="15" ry="22" fill="#f7e9d2" />
+											<ellipse cx="-13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="0" cy="-30" rx="10" ry="7" fill="#f7e9d2" />
+											<polygon points="-3,-35 3,-35 0,-31" fill="#c4787a" />
+											<path
+												d="M-12 -41 Q-9 -46 -6 -41 M6 -41 Q9 -46 12 -41"
+												stroke="#2a1a10"
+												stroke-width="2.2"
+												fill="none"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M-4 -29 Q0 -26 4 -29"
+												stroke="#7a3a22"
+												stroke-width="1.8"
+												fill="none"
+												stroke-linecap="round"
+											/>
+										</g>
+									</svg>
+								</div>
+							</div>
+							<div class="hints">
+								<span class="hint"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+										<circle cx="12" cy="7" r="4" /></svg
+									>Your name</span
+								><span class="hint"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path
+											d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+										/>
+										<path d="M22 10v6" />
+										<path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg
+									>Study or work</span
+								><span class="hint"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<circle cx="11" cy="4" r="2" />
+										<circle cx="18" cy="8" r="2" />
+										<circle cx="20" cy="16" r="2" />
+										<path
+											d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"
+										/></svg
+									>Pets</span
+								><span class="hint"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path
+											d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"
+										/></svg
+									>Hobbies</span
+								><span class="hint"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M8 2v4" />
+										<path d="M16 2v4" />
+										<rect width="18" height="18" x="3" y="4" rx="2" />
+										<path d="M3 10h18" /></svg
+									>Coming up</span
+								>
+							</div>
+							<div class="microw">
+								<button class="kb" aria-label="Type instead">
+									<svg
+										class="ico"
+										width="20"
+										height="20"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#b4bbc9"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M10 8h.01" />
+										<path d="M12 12h.01" />
+										<path d="M14 8h.01" />
+										<path d="M16 12h.01" />
+										<path d="M18 8h.01" />
+										<path d="M6 8h.01" />
+										<path d="M7 16h10" />
+										<path d="M8 12h.01" />
+										<rect width="20" height="16" x="2" y="4" rx="2" />
+									</svg>
+								</button>
+								<div class="micwrap idle">
+									<svg class="ring" width="88" height="88" viewBox="0 0 88 88">
+										<circle
+											cx="44"
+											cy="44"
+											r="40"
+											stroke="rgba(239,242,249,.10)"
+											stroke-width="3"
+											fill="none"
+										/>
+										<circle
+											cx="44"
+											cy="44"
+											r="40"
+											stroke="#f2b66b"
+											stroke-width="3"
+											fill="none"
+											stroke-linecap="round"
+											stroke-dasharray="251.3"
+											stroke-dashoffset="251.3"
+											transform="rotate(-90 44 44)"
+										/></svg
+									><button class="mic">
+										<svg
+											class="ico"
+											width="28"
+											height="28"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="#131b2e"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path d="M12 19v3" />
+											<path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+											<rect x="9" y="2" width="6" height="13" rx="3" />
+										</svg>
+									</button>
+								</div>
+								<span class="kb ghost"></span>
+							</div>
+							<p class="miclabel">Hold to talk</p>
+							<p class="foot">Up to 60 words · about 20 seconds</p>
+						</div>
+					</div>
+					<figcaption>
+						<span class="tag">A · Stage</span>
+						<h3>Mochi, front and centre</h3>
+						<p>
+							Continues Meet Mochi: the pet in its amber glow asks the question in its own bubble.
+							Big serif title, hint chips of what to say, one big mic. Feels like a moment with the
+							pet, not a form.
+						</p>
+					</figcaption>
+				</figure>
+				<figure class="opt">
+					<div class="phwrap">
+						<div class="phone skyphone" style="">
+							<div class="status">
+								<span>9:41</span><span class="notch"></span><span class="bat"></span>
+							</div>
+							<div class="sky"></div>
+							<div class="stars"></div>
+							<button class="skip glass">Skip</button>
+							<div class="petB">
+								<div class="pet" style="width: 132px; height: 132px">
+									<svg viewBox="0 0 200 200" aria-hidden="true">
+										<ellipse cx="96" cy="185" rx="46" ry="6" fill="#000" opacity="0.35" />
+										<g transform="translate(96 118) scale(1.25)">
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#fbf1e0"
+												stroke-width="20"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="0"
+												cy="14"
+												rx="32"
+												ry="37"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="-13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="-24,-48 -19,-77 -3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="24,-48 19,-77 3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<circle
+												cx="0"
+												cy="-38"
+												r="26"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#e3914a"
+												stroke-width="10"
+												stroke-linecap="round"
+											/>
+											<ellipse cx="0" cy="14" rx="32" ry="37" fill="#e3914a" />
+											<polygon points="-24,-48 -19,-77 -3,-60" fill="#e3914a" />
+											<polygon points="24,-48 19,-77 3,-60" fill="#e3914a" />
+											<polygon points="-20,-52 -18,-70 -8,-58" fill="#c96f3a" />
+											<polygon points="20,-52 18,-70 8,-58" fill="#c96f3a" />
+											<circle cx="0" cy="-38" r="26" fill="#e3914a" />
+											<defs>
+												<clipPath id="c-happy">
+													<ellipse cx="0" cy="14" rx="34" ry="39" />
+													<circle cx="0" cy="-38" r="28" />
+												</clipPath>
+											</defs>
+											<g clip-path="url(#c-happy)">
+												<path
+													d="M-6 -63 L-4 -55 M0 -64 L0 -55 M6 -63 L4 -55 M-31 4 L-23 6 M-32 15 L-24 16 M31 4 L23 6 M32 15 L24 16"
+													fill="none"
+													stroke="#a85a24"
+													stroke-width="2.6"
+													stroke-linecap="round"
+												/>
+											</g>
+											<ellipse cx="0" cy="24" rx="15" ry="22" fill="#f7e9d2" />
+											<ellipse cx="-13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="0" cy="-30" rx="10" ry="7" fill="#f7e9d2" />
+											<polygon points="-3,-35 3,-35 0,-31" fill="#c4787a" />
+											<path
+												d="M-12 -41 Q-9 -46 -6 -41 M6 -41 Q9 -46 12 -41"
+												stroke="#2a1a10"
+												stroke-width="2.2"
+												fill="none"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M-4 -29 Q0 -26 4 -29"
+												stroke="#7a3a22"
+												stroke-width="1.8"
+												fill="none"
+												stroke-linecap="round"
+											/>
+										</g>
+									</svg>
+								</div>
+								<div class="bubble rb small"><p>I want to know you!</p></div>
+							</div>
+							<div class="sheet">
+								<h2 class="serif sm">Tell Mochi about you</h2>
+								<p class="lead">A few sentences, and Mochi knows you from day one.</p>
+								<div class="hints grid">
+									<span class="hint"
+										><svg
+											class="ico"
+											width="13"
+											height="13"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+											<circle cx="12" cy="7" r="4" /></svg
+										>Your name</span
+									><span class="hint"
+										><svg
+											class="ico"
+											width="13"
+											height="13"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path
+												d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+											/>
+											<path d="M22 10v6" />
+											<path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg
+										>Study or work</span
+									><span class="hint"
+										><svg
+											class="ico"
+											width="13"
+											height="13"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<circle cx="11" cy="4" r="2" />
+											<circle cx="18" cy="8" r="2" />
+											<circle cx="20" cy="16" r="2" />
+											<path
+												d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"
+											/></svg
+										>Pets</span
+									><span class="hint"
+										><svg
+											class="ico"
+											width="13"
+											height="13"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path
+												d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"
+											/></svg
+										>Hobbies</span
+									><span class="hint"
+										><svg
+											class="ico"
+											width="13"
+											height="13"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path d="M8 2v4" />
+											<path d="M16 2v4" />
+											<rect width="18" height="18" x="3" y="4" rx="2" />
+											<path d="M3 10h18" /></svg
+										>Coming up</span
+									>
+								</div>
+								<div class="microw">
+									<button class="kb" aria-label="Type instead">
+										<svg
+											class="ico"
+											width="20"
+											height="20"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="#b4bbc9"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path d="M10 8h.01" />
+											<path d="M12 12h.01" />
+											<path d="M14 8h.01" />
+											<path d="M16 12h.01" />
+											<path d="M18 8h.01" />
+											<path d="M6 8h.01" />
+											<path d="M7 16h10" />
+											<path d="M8 12h.01" />
+											<rect width="20" height="16" x="2" y="4" rx="2" />
+										</svg>
+									</button>
+									<div class="micwrap idle">
+										<svg class="ring" width="88" height="88" viewBox="0 0 88 88">
+											<circle
+												cx="44"
+												cy="44"
+												r="40"
+												stroke="rgba(239,242,249,.10)"
+												stroke-width="3"
+												fill="none"
+											/>
+											<circle
+												cx="44"
+												cy="44"
+												r="40"
+												stroke="#f2b66b"
+												stroke-width="3"
+												fill="none"
+												stroke-linecap="round"
+												stroke-dasharray="251.3"
+												stroke-dashoffset="251.3"
+												transform="rotate(-90 44 44)"
+											/></svg
+										><button class="mic">
+											<svg
+												class="ico"
+												width="28"
+												height="28"
+												viewBox="0 0 24 24"
+												fill="none"
+												stroke="#131b2e"
+												stroke-width="2"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												aria-hidden="true"
+											>
+												<path d="M12 19v3" />
+												<path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+												<rect x="9" y="2" width="6" height="13" rx="3" />
+											</svg>
+										</button>
+									</div>
+									<span class="kb ghost"></span>
+								</div>
+								<p class="miclabel">Hold to talk</p>
+							</div>
+						</div>
+					</div>
+					<figcaption>
+						<span class="tag">B · Sky sheet</span>
+						<h3>Continues the sign-in screen</h3>
+						<p>
+							Same sky and sheet as Save Mochi, so it reads as the last step of the same flow. Calm
+							and familiar, but less of a 'new moment': the pet is smaller and the sheet looks like
+							a form.
+						</p>
+					</figcaption>
+				</figure>
+				<figure class="opt">
+					<div class="phwrap">
+						<div class="phone" style="">
+							<div class="status">
+								<span>9:41</span><span class="notch"></span><span class="bat"></span>
+							</div>
+							<button class="skip">Skip</button>
+							<div class="topC">
+								<div class="pet" style="width: 104px; height: 104px">
+									<svg viewBox="0 0 200 200" aria-hidden="true">
+										<ellipse cx="96" cy="185" rx="46" ry="6" fill="#000" opacity="0.35" />
+										<g transform="translate(96 118) scale(1.25)">
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#fbf1e0"
+												stroke-width="20"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="0"
+												cy="14"
+												rx="32"
+												ry="37"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="-13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="-24,-48 -19,-77 -3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="24,-48 19,-77 3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<circle
+												cx="0"
+												cy="-38"
+												r="26"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#e3914a"
+												stroke-width="10"
+												stroke-linecap="round"
+											/>
+											<ellipse cx="0" cy="14" rx="32" ry="37" fill="#e3914a" />
+											<polygon points="-24,-48 -19,-77 -3,-60" fill="#e3914a" />
+											<polygon points="24,-48 19,-77 3,-60" fill="#e3914a" />
+											<polygon points="-20,-52 -18,-70 -8,-58" fill="#c96f3a" />
+											<polygon points="20,-52 18,-70 8,-58" fill="#c96f3a" />
+											<circle cx="0" cy="-38" r="26" fill="#e3914a" />
+											<defs>
+												<clipPath id="c-happy">
+													<ellipse cx="0" cy="14" rx="34" ry="39" />
+													<circle cx="0" cy="-38" r="28" />
+												</clipPath>
+											</defs>
+											<g clip-path="url(#c-happy)">
+												<path
+													d="M-6 -63 L-4 -55 M0 -64 L0 -55 M6 -63 L4 -55 M-31 4 L-23 6 M-32 15 L-24 16 M31 4 L23 6 M32 15 L24 16"
+													fill="none"
+													stroke="#a85a24"
+													stroke-width="2.6"
+													stroke-linecap="round"
+												/>
+											</g>
+											<ellipse cx="0" cy="24" rx="15" ry="22" fill="#f7e9d2" />
+											<ellipse cx="-13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="0" cy="-30" rx="10" ry="7" fill="#f7e9d2" />
+											<polygon points="-3,-35 3,-35 0,-31" fill="#c4787a" />
+											<path
+												d="M-12 -41 Q-9 -46 -6 -41 M6 -41 Q9 -46 12 -41"
+												stroke="#2a1a10"
+												stroke-width="2.2"
+												fill="none"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M-4 -29 Q0 -26 4 -29"
+												stroke="#7a3a22"
+												stroke-width="1.8"
+												fill="none"
+												stroke-linecap="round"
+											/>
+										</g>
+									</svg>
+								</div>
+								<div class="bubble lt small">
+									<p>Fill my memory! What should I know about you?</p>
+								</div>
+							</div>
+							<h2 class="serif sm cTitle">What should Mochi remember?</h2>
+							<div class="slots">
+								<span class="slot"
+									><svg
+										class="ico"
+										width="15"
+										height="15"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#8e96a5"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+										<circle cx="12" cy="7" r="4" /></svg
+									><span>Your name</span></span
+								><span class="slot"
+									><svg
+										class="ico"
+										width="15"
+										height="15"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#8e96a5"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path
+											d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+										/>
+										<path d="M22 10v6" />
+										<path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg
+									><span>Study or work</span></span
+								><span class="slot"
+									><svg
+										class="ico"
+										width="15"
+										height="15"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#8e96a5"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+										<path d="M16 3.128a4 4 0 0 1 0 7.744" />
+										<path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+										<circle cx="9" cy="7" r="4" /></svg
+									><span>Family</span></span
+								><span class="slot"
+									><svg
+										class="ico"
+										width="15"
+										height="15"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#8e96a5"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<circle cx="11" cy="4" r="2" />
+										<circle cx="18" cy="8" r="2" />
+										<circle cx="20" cy="16" r="2" />
+										<path
+											d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"
+										/></svg
+									><span>Pets</span></span
+								><span class="slot"
+									><svg
+										class="ico"
+										width="15"
+										height="15"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#8e96a5"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path
+											d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"
+										/></svg
+									><span>Hobbies</span></span
+								><span class="slot"
+									><svg
+										class="ico"
+										width="15"
+										height="15"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#8e96a5"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path
+											d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+										/>
+										<circle cx="12" cy="10" r="3" /></svg
+									><span>Where you live</span></span
+								><span class="slot"
+									><svg
+										class="ico"
+										width="15"
+										height="15"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#8e96a5"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path
+											d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"
+										/></svg
+									><span>Favourite things</span></span
+								><span class="slot"
+									><svg
+										class="ico"
+										width="15"
+										height="15"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#8e96a5"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M8 2v4" />
+										<path d="M16 2v4" />
+										<rect width="18" height="18" x="3" y="4" rx="2" />
+										<path d="M3 10h18" /></svg
+									><span>Coming up</span></span
+								>
+							</div>
+							<p class="slotcount">0 of 8 · Mochi fills these from what you say</p>
+							<div class="microw">
+								<button class="kb" aria-label="Type instead">
+									<svg
+										class="ico"
+										width="20"
+										height="20"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#b4bbc9"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M10 8h.01" />
+										<path d="M12 12h.01" />
+										<path d="M14 8h.01" />
+										<path d="M16 12h.01" />
+										<path d="M18 8h.01" />
+										<path d="M6 8h.01" />
+										<path d="M7 16h10" />
+										<path d="M8 12h.01" />
+										<rect width="20" height="16" x="2" y="4" rx="2" />
+									</svg>
+								</button>
+								<div class="micwrap idle">
+									<svg class="ring" width="88" height="88" viewBox="0 0 88 88">
+										<circle
+											cx="44"
+											cy="44"
+											r="40"
+											stroke="rgba(239,242,249,.10)"
+											stroke-width="3"
+											fill="none"
+										/>
+										<circle
+											cx="44"
+											cy="44"
+											r="40"
+											stroke="#f2b66b"
+											stroke-width="3"
+											fill="none"
+											stroke-linecap="round"
+											stroke-dasharray="251.3"
+											stroke-dashoffset="251.3"
+											transform="rotate(-90 44 44)"
+										/></svg
+									><button class="mic">
+										<svg
+											class="ico"
+											width="28"
+											height="28"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="#131b2e"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path d="M12 19v3" />
+											<path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+											<rect x="9" y="2" width="6" height="13" rx="3" />
+										</svg>
+									</button>
+								</div>
+								<span class="kb ghost"></span>
+							</div>
+							<p class="miclabel">Hold to talk</p>
+						</div>
+					</div>
+					<figcaption>
+						<span class="tag">C · Memory slots</span>
+						<h3>Fill Mochi's memory</h3>
+						<p>
+							Eight empty dashed slots that fill from what you say. Playful and goal-like (people
+							like to fill empty slots), but it looks like a checklist, and fewer than 8 facts can
+							feel like failing.
+						</p>
+					</figcaption>
+				</figure>
+			</div>
+
+			<h2 class="section">2 · The whole flow, in direction A</h2>
+			<p class="sub">Every state the screen can be in. Copy is draft for you to change.</p>
+			<div class="states">
+				<figure class="state">
+					<div class="phwrap">
+						<div class="phone" style="">
+							<div class="status">
+								<span>9:41</span><span class="notch"></span><span class="bat"></span>
+							</div>
+							<button class="skip">Skip</button>
+							<div class="headA">
+								<p class="eyebrow">One last thing</p>
+								<h2 class="serif">Tell Mochi<br />about you</h2>
+							</div>
+							<div class="stageA">
+								<div class="glow"></div>
+								<div class="bubble tr">
+									<p>I want to know you! Tell me a little about yourself.</p>
+								</div>
+								<div class="pet" style="width: 160px; height: 160px">
+									<svg viewBox="0 0 200 200" aria-hidden="true">
+										<ellipse cx="96" cy="185" rx="46" ry="6" fill="#000" opacity="0.35" />
+										<g transform="translate(96 118) scale(1.25)">
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#fbf1e0"
+												stroke-width="20"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="0"
+												cy="14"
+												rx="32"
+												ry="37"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="-13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="-24,-48 -19,-77 -3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="24,-48 19,-77 3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<circle
+												cx="0"
+												cy="-38"
+												r="26"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#e3914a"
+												stroke-width="10"
+												stroke-linecap="round"
+											/>
+											<ellipse cx="0" cy="14" rx="32" ry="37" fill="#e3914a" />
+											<polygon points="-24,-48 -19,-77 -3,-60" fill="#e3914a" />
+											<polygon points="24,-48 19,-77 3,-60" fill="#e3914a" />
+											<polygon points="-20,-52 -18,-70 -8,-58" fill="#c96f3a" />
+											<polygon points="20,-52 18,-70 8,-58" fill="#c96f3a" />
+											<circle cx="0" cy="-38" r="26" fill="#e3914a" />
+											<defs>
+												<clipPath id="c-happy">
+													<ellipse cx="0" cy="14" rx="34" ry="39" />
+													<circle cx="0" cy="-38" r="28" />
+												</clipPath>
+											</defs>
+											<g clip-path="url(#c-happy)">
+												<path
+													d="M-6 -63 L-4 -55 M0 -64 L0 -55 M6 -63 L4 -55 M-31 4 L-23 6 M-32 15 L-24 16 M31 4 L23 6 M32 15 L24 16"
+													fill="none"
+													stroke="#a85a24"
+													stroke-width="2.6"
+													stroke-linecap="round"
+												/>
+											</g>
+											<ellipse cx="0" cy="24" rx="15" ry="22" fill="#f7e9d2" />
+											<ellipse cx="-13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="0" cy="-30" rx="10" ry="7" fill="#f7e9d2" />
+											<polygon points="-3,-35 3,-35 0,-31" fill="#c4787a" />
+											<path
+												d="M-12 -41 Q-9 -46 -6 -41 M6 -41 Q9 -46 12 -41"
+												stroke="#2a1a10"
+												stroke-width="2.2"
+												fill="none"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M-4 -29 Q0 -26 4 -29"
+												stroke="#7a3a22"
+												stroke-width="1.8"
+												fill="none"
+												stroke-linecap="round"
+											/>
+										</g>
+									</svg>
+								</div>
+							</div>
+							<div class="hints">
+								<span class="hint"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+										<circle cx="12" cy="7" r="4" /></svg
+									>Your name</span
+								><span class="hint"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path
+											d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+										/>
+										<path d="M22 10v6" />
+										<path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg
+									>Study or work</span
+								><span class="hint"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<circle cx="11" cy="4" r="2" />
+										<circle cx="18" cy="8" r="2" />
+										<circle cx="20" cy="16" r="2" />
+										<path
+											d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"
+										/></svg
+									>Pets</span
+								><span class="hint"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path
+											d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"
+										/></svg
+									>Hobbies</span
+								><span class="hint"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M8 2v4" />
+										<path d="M16 2v4" />
+										<rect width="18" height="18" x="3" y="4" rx="2" />
+										<path d="M3 10h18" /></svg
+									>Coming up</span
+								>
+							</div>
+							<div class="microw">
+								<button class="kb" aria-label="Type instead">
+									<svg
+										class="ico"
+										width="20"
+										height="20"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#b4bbc9"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M10 8h.01" />
+										<path d="M12 12h.01" />
+										<path d="M14 8h.01" />
+										<path d="M16 12h.01" />
+										<path d="M18 8h.01" />
+										<path d="M6 8h.01" />
+										<path d="M7 16h10" />
+										<path d="M8 12h.01" />
+										<rect width="20" height="16" x="2" y="4" rx="2" />
+									</svg>
+								</button>
+								<div class="micwrap idle">
+									<svg class="ring" width="88" height="88" viewBox="0 0 88 88">
+										<circle
+											cx="44"
+											cy="44"
+											r="40"
+											stroke="rgba(239,242,249,.10)"
+											stroke-width="3"
+											fill="none"
+										/>
+										<circle
+											cx="44"
+											cy="44"
+											r="40"
+											stroke="#f2b66b"
+											stroke-width="3"
+											fill="none"
+											stroke-linecap="round"
+											stroke-dasharray="251.3"
+											stroke-dashoffset="251.3"
+											transform="rotate(-90 44 44)"
+										/></svg
+									><button class="mic">
+										<svg
+											class="ico"
+											width="28"
+											height="28"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="#131b2e"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path d="M12 19v3" />
+											<path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+											<rect x="9" y="2" width="6" height="13" rx="3" />
+										</svg>
+									</button>
+								</div>
+								<span class="kb ghost"></span>
+							</div>
+							<p class="miclabel">Hold to talk</p>
+							<p class="foot">Up to 60 words · about 20 seconds</p>
+						</div>
+					</div>
+					<figcaption>
+						<span class="num">1 · Ask</span>
+						<h3>The pet asks</h3>
+						<p>
+							Glow behind the pet, its bubble asks, the hints suggest topics. Hold the mic to talk,
+							tap the keyboard to type. Skip is quiet but always there.
+						</p>
+					</figcaption>
+				</figure>
+				<figure class="state">
+					<div class="phwrap">
+						<div class="phone" style="">
+							<div class="status">
+								<span>9:41</span><span class="notch"></span><span class="bat"></span>
+							</div>
+							<button class="skip">Skip</button>
+							<div class="headA"><p class="eyebrow">Listening…</p></div>
+							<div class="stageA">
+								<div class="glow strong"></div>
+								<div class="bubble tr">
+									<p>
+										<span class="paws"
+											><i
+												><svg width="14" height="14" viewBox="0 0 24 24" fill="#f2b66b">
+													<circle cx="7" cy="8" r="2.2" />
+													<circle cx="12" cy="6" r="2.2" />
+													<circle cx="17" cy="8" r="2.2" />
+													<ellipse cx="12" cy="15" rx="4.5" ry="3.8" /></svg></i
+											><i
+												><svg width="14" height="14" viewBox="0 0 24 24" fill="#f2b66b">
+													<circle cx="7" cy="8" r="2.2" />
+													<circle cx="12" cy="6" r="2.2" />
+													<circle cx="17" cy="8" r="2.2" />
+													<ellipse cx="12" cy="15" rx="4.5" ry="3.8" /></svg></i
+											><i
+												><svg width="14" height="14" viewBox="0 0 24 24" fill="#f2b66b">
+													<circle cx="7" cy="8" r="2.2" />
+													<circle cx="12" cy="6" r="2.2" />
+													<circle cx="17" cy="8" r="2.2" />
+													<ellipse cx="12" cy="15" rx="4.5" ry="3.8" /></svg></i></span
+										>&nbsp;
+									</p>
+								</div>
+								<div class="pet lean" style="width: 160px; height: 160px">
+									<svg viewBox="0 0 200 200" aria-hidden="true">
+										<ellipse cx="96" cy="185" rx="46" ry="6" fill="#000" opacity="0.35" />
+										<g transform="translate(96 118) scale(1.25)">
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#fbf1e0"
+												stroke-width="20"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="0"
+												cy="14"
+												rx="32"
+												ry="37"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="-13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="-24,-48 -19,-77 -3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="24,-48 19,-77 3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<circle
+												cx="0"
+												cy="-38"
+												r="26"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#e3914a"
+												stroke-width="10"
+												stroke-linecap="round"
+											/>
+											<ellipse cx="0" cy="14" rx="32" ry="37" fill="#e3914a" />
+											<polygon points="-24,-48 -19,-77 -3,-60" fill="#e3914a" />
+											<polygon points="24,-48 19,-77 3,-60" fill="#e3914a" />
+											<polygon points="-20,-52 -18,-70 -8,-58" fill="#c96f3a" />
+											<polygon points="20,-52 18,-70 8,-58" fill="#c96f3a" />
+											<circle cx="0" cy="-38" r="26" fill="#e3914a" />
+											<defs>
+												<clipPath id="c-content">
+													<ellipse cx="0" cy="14" rx="34" ry="39" />
+													<circle cx="0" cy="-38" r="28" />
+												</clipPath>
+											</defs>
+											<g clip-path="url(#c-content)">
+												<path
+													d="M-6 -63 L-4 -55 M0 -64 L0 -55 M6 -63 L4 -55 M-31 4 L-23 6 M-32 15 L-24 16 M31 4 L23 6 M32 15 L24 16"
+													fill="none"
+													stroke="#a85a24"
+													stroke-width="2.6"
+													stroke-linecap="round"
+												/>
+											</g>
+											<ellipse cx="0" cy="24" rx="15" ry="22" fill="#f7e9d2" />
+											<ellipse cx="-13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="0" cy="-30" rx="10" ry="7" fill="#f7e9d2" />
+											<polygon points="-3,-35 3,-35 0,-31" fill="#c4787a" />
+											<circle cx="-9" cy="-42" r="3" fill="#2a1a10" />
+											<circle cx="9" cy="-42" r="3" fill="#2a1a10" />
+										</g>
+									</svg>
+								</div>
+							</div>
+							<div class="hints">
+								<span class="hint on"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M20 6 9 17l-5-5" /></svg
+									>Your name</span
+								><span class="hint on"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M20 6 9 17l-5-5" /></svg
+									>Study or work</span
+								><span class="hint on"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M20 6 9 17l-5-5" /></svg
+									>Pets</span
+								><span class="hint on"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M20 6 9 17l-5-5" /></svg
+									>Hobbies</span
+								><span class="hint"
+									><svg
+										class="ico"
+										width="13"
+										height="13"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M8 2v4" />
+										<path d="M16 2v4" />
+										<rect width="18" height="18" x="3" y="4" rx="2" />
+										<path d="M3 10h18" /></svg
+									>Coming up</span
+								>
+							</div>
+							<div class="words">
+								<span>a golden retriever called Kara. I love painting, and my anatomy</span>
+							</div>
+							<div class="microw">
+								<button class="kb" aria-label="Type instead">
+									<svg
+										class="ico"
+										width="20"
+										height="20"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#b4bbc9"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M10 8h.01" />
+										<path d="M12 12h.01" />
+										<path d="M14 8h.01" />
+										<path d="M16 12h.01" />
+										<path d="M18 8h.01" />
+										<path d="M6 8h.01" />
+										<path d="M7 16h10" />
+										<path d="M8 12h.01" />
+										<rect width="20" height="16" x="2" y="4" rx="2" />
+									</svg>
+								</button>
+								<div class="micwrap live">
+									<svg class="ring" width="88" height="88" viewBox="0 0 88 88">
+										<circle
+											cx="44"
+											cy="44"
+											r="40"
+											stroke="rgba(239,242,249,.10)"
+											stroke-width="3"
+											fill="none"
+										/>
+										<circle
+											cx="44"
+											cy="44"
+											r="40"
+											stroke="#f2b66b"
+											stroke-width="3"
+											fill="none"
+											stroke-linecap="round"
+											stroke-dasharray="251.3"
+											stroke-dashoffset="95.5"
+											transform="rotate(-90 44 44)"
+										/></svg
+									><button class="mic">
+										<svg
+											class="ico"
+											width="28"
+											height="28"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="#131b2e"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path d="M12 19v3" />
+											<path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+											<rect x="9" y="2" width="6" height="13" rx="3" />
+										</svg></button
+									><span class="count">37 / 60</span>
+								</div>
+								<span class="kb ghost"></span>
+							</div>
+							<p class="miclabel">Release to finish</p>
+						</div>
+					</div>
+					<figcaption>
+						<span class="num">2 · Listening</span>
+						<h3>Your words appear live</h3>
+						<p>
+							The pet leans in, its bubble shows thinking paws, your words scroll in a chip. The
+							ring around the mic fills toward 60 words and the counter shows 37 / 60. Hints light
+							up as you cover them (name, study, pets…), which nudges people to say a bit more.
+						</p>
+					</figcaption>
+				</figure>
+				<figure class="state">
+					<div class="phwrap">
+						<div class="phone" style="">
+							<div class="status">
+								<span>9:41</span><span class="notch"></span><span class="bat"></span>
+							</div>
+							<button class="skip">Skip</button>
+							<div class="headA tight">
+								<p class="eyebrow">Check your words</p>
+								<h2 class="serif sm">Is this right?</h2>
+							</div>
+							<div class="review">
+								<p>
+									I'm Ece, I study medicine in Istanbul and I have a golden retriever called Kara. I
+									love painting, and my anatomy exam is on Friday.
+								</p>
+								<span class="wc">41 of 60 words</span>
+							</div>
+							<div class="row2">
+								<button class="secondary">
+									<svg
+										class="ico"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#f2b66b"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+										<path d="M3 3v5h5" /></svg
+									>Record again</button
+								><button class="secondary">
+									<svg
+										class="ico"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#f2b66b"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path
+											d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+										/>
+										<path d="m15 5 4 4" /></svg
+									>Edit
+								</button>
+							</div>
+							<div class="reviewpet">
+								<div class="pet" style="width: 96px; height: 96px">
+									<svg viewBox="0 0 200 200" aria-hidden="true">
+										<ellipse cx="96" cy="185" rx="46" ry="6" fill="#000" opacity="0.35" />
+										<g transform="translate(96 118) scale(1.25)">
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#fbf1e0"
+												stroke-width="20"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="0"
+												cy="14"
+												rx="32"
+												ry="37"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="-13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="-24,-48 -19,-77 -3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="24,-48 19,-77 3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<circle
+												cx="0"
+												cy="-38"
+												r="26"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#e3914a"
+												stroke-width="10"
+												stroke-linecap="round"
+											/>
+											<ellipse cx="0" cy="14" rx="32" ry="37" fill="#e3914a" />
+											<polygon points="-24,-48 -19,-77 -3,-60" fill="#e3914a" />
+											<polygon points="24,-48 19,-77 3,-60" fill="#e3914a" />
+											<polygon points="-20,-52 -18,-70 -8,-58" fill="#c96f3a" />
+											<polygon points="20,-52 18,-70 8,-58" fill="#c96f3a" />
+											<circle cx="0" cy="-38" r="26" fill="#e3914a" />
+											<defs>
+												<clipPath id="c-happy">
+													<ellipse cx="0" cy="14" rx="34" ry="39" />
+													<circle cx="0" cy="-38" r="28" />
+												</clipPath>
+											</defs>
+											<g clip-path="url(#c-happy)">
+												<path
+													d="M-6 -63 L-4 -55 M0 -64 L0 -55 M6 -63 L4 -55 M-31 4 L-23 6 M-32 15 L-24 16 M31 4 L23 6 M32 15 L24 16"
+													fill="none"
+													stroke="#a85a24"
+													stroke-width="2.6"
+													stroke-linecap="round"
+												/>
+											</g>
+											<ellipse cx="0" cy="24" rx="15" ry="22" fill="#f7e9d2" />
+											<ellipse cx="-13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="0" cy="-30" rx="10" ry="7" fill="#f7e9d2" />
+											<polygon points="-3,-35 3,-35 0,-31" fill="#c4787a" />
+											<path
+												d="M-12 -41 Q-9 -46 -6 -41 M6 -41 Q9 -46 12 -41"
+												stroke="#2a1a10"
+												stroke-width="2.2"
+												fill="none"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M-4 -29 Q0 -26 4 -29"
+												stroke="#7a3a22"
+												stroke-width="1.8"
+												fill="none"
+												stroke-linecap="round"
+											/>
+										</g>
+									</svg>
+								</div>
+								<div class="bubble lt small"><p>Ooh, tell me!</p></div>
+							</div>
+							<div class="bottom">
+								<button class="primary">
+									Send to Mochi
+									<svg
+										class="ico"
+										width="18"
+										height="18"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#131b2e"
+										stroke-width="2.2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M5 12h14" />
+										<path d="m12 5 7 7-7 7" />
+									</svg>
+								</button>
+								<p class="consent">
+									Your words go to our AI to find what to remember. Audio stays on your phone.
+								</p>
+							</div>
+						</div>
+					</div>
+					<figcaption>
+						<span class="num">3 · Check</span>
+						<h3>Read it before it goes</h3>
+						<p>
+							Your words, editable. Record again or Edit make no request. One line says plainly what
+							happens to the words (the consent before they go to the AI). Send to Mochi is the one
+							primary.
+						</p>
+					</figcaption>
+				</figure>
+				<figure class="state">
+					<div class="phwrap">
+						<div class="phone" style="">
+							<div class="status">
+								<span>9:41</span><span class="notch"></span><span class="bat"></span>
+							</div>
+							<div class="headA">
+								<p class="eyebrow">Getting to know you</p>
+								<h2 class="serif">Tell Mochi<br />about you</h2>
+							</div>
+							<div class="stageA">
+								<div class="glow strong pulse"></div>
+								<div class="bubble tr">
+									<p>
+										<span class="paws"
+											><i
+												><svg width="14" height="14" viewBox="0 0 24 24" fill="#f2b66b">
+													<circle cx="7" cy="8" r="2.2" />
+													<circle cx="12" cy="6" r="2.2" />
+													<circle cx="17" cy="8" r="2.2" />
+													<ellipse cx="12" cy="15" rx="4.5" ry="3.8" /></svg></i
+											><i
+												><svg width="14" height="14" viewBox="0 0 24 24" fill="#f2b66b">
+													<circle cx="7" cy="8" r="2.2" />
+													<circle cx="12" cy="6" r="2.2" />
+													<circle cx="17" cy="8" r="2.2" />
+													<ellipse cx="12" cy="15" rx="4.5" ry="3.8" /></svg></i
+											><i
+												><svg width="14" height="14" viewBox="0 0 24 24" fill="#f2b66b">
+													<circle cx="7" cy="8" r="2.2" />
+													<circle cx="12" cy="6" r="2.2" />
+													<circle cx="17" cy="8" r="2.2" />
+													<ellipse cx="12" cy="15" rx="4.5" ry="3.8" /></svg></i></span
+										>&nbsp;
+									</p>
+								</div>
+								<div class="pet" style="width: 160px; height: 160px">
+									<svg viewBox="0 0 200 200" aria-hidden="true">
+										<ellipse cx="96" cy="185" rx="46" ry="6" fill="#000" opacity="0.35" />
+										<g transform="translate(96 118) scale(1.25)">
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#fbf1e0"
+												stroke-width="20"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="0"
+												cy="14"
+												rx="32"
+												ry="37"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="-13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="-24,-48 -19,-77 -3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="24,-48 19,-77 3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<circle
+												cx="0"
+												cy="-38"
+												r="26"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#e3914a"
+												stroke-width="10"
+												stroke-linecap="round"
+											/>
+											<ellipse cx="0" cy="14" rx="32" ry="37" fill="#e3914a" />
+											<polygon points="-24,-48 -19,-77 -3,-60" fill="#e3914a" />
+											<polygon points="24,-48 19,-77 3,-60" fill="#e3914a" />
+											<polygon points="-20,-52 -18,-70 -8,-58" fill="#c96f3a" />
+											<polygon points="20,-52 18,-70 8,-58" fill="#c96f3a" />
+											<circle cx="0" cy="-38" r="26" fill="#e3914a" />
+											<defs>
+												<clipPath id="c-content">
+													<ellipse cx="0" cy="14" rx="34" ry="39" />
+													<circle cx="0" cy="-38" r="28" />
+												</clipPath>
+											</defs>
+											<g clip-path="url(#c-content)">
+												<path
+													d="M-6 -63 L-4 -55 M0 -64 L0 -55 M6 -63 L4 -55 M-31 4 L-23 6 M-32 15 L-24 16 M31 4 L23 6 M32 15 L24 16"
+													fill="none"
+													stroke="#a85a24"
+													stroke-width="2.6"
+													stroke-linecap="round"
+												/>
+											</g>
+											<ellipse cx="0" cy="24" rx="15" ry="22" fill="#f7e9d2" />
+											<ellipse cx="-13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="0" cy="-30" rx="10" ry="7" fill="#f7e9d2" />
+											<polygon points="-3,-35 3,-35 0,-31" fill="#c4787a" />
+											<circle cx="-9" cy="-42" r="3" fill="#2a1a10" />
+											<circle cx="9" cy="-42" r="3" fill="#2a1a10" />
+										</g>
+									</svg>
+								</div>
+							</div>
+							<div class="facts ghosts"><span></span><span></span><span></span><span></span></div>
+							<p class="foot center">Mochi is thinking about everything you said…</p>
+						</div>
+					</div>
+					<figcaption>
+						<span class="num">4 · Thinking</span>
+						<h3>1–2 seconds</h3>
+						<p>
+							Glow breathes, paws in the bubble, chip shapes shimmer where the facts will land. No
+							Skip here.
+						</p>
+					</figcaption>
+				</figure>
+				<figure class="state">
+					<div class="phwrap">
+						<div class="phone" style="">
+							<div class="status">
+								<span>9:41</span><span class="notch"></span><span class="bat"></span>
+							</div>
+							<div class="headA tight"><p class="eyebrow">Mochi will remember</p></div>
+							<div class="resTop">
+								<div class="glow"></div>
+								<div class="pet" style="width: 112px; height: 112px">
+									<svg viewBox="0 0 200 200" aria-hidden="true">
+										<ellipse cx="96" cy="185" rx="46" ry="6" fill="#000" opacity="0.35" />
+										<g transform="translate(96 118) scale(1.25)">
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#fbf1e0"
+												stroke-width="20"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="0"
+												cy="14"
+												rx="32"
+												ry="37"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="-13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="-24,-48 -19,-77 -3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="24,-48 19,-77 3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<circle
+												cx="0"
+												cy="-38"
+												r="26"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#e3914a"
+												stroke-width="10"
+												stroke-linecap="round"
+											/>
+											<ellipse cx="0" cy="14" rx="32" ry="37" fill="#e3914a" />
+											<polygon points="-24,-48 -19,-77 -3,-60" fill="#e3914a" />
+											<polygon points="24,-48 19,-77 3,-60" fill="#e3914a" />
+											<polygon points="-20,-52 -18,-70 -8,-58" fill="#c96f3a" />
+											<polygon points="20,-52 18,-70 8,-58" fill="#c96f3a" />
+											<circle cx="0" cy="-38" r="26" fill="#e3914a" />
+											<defs>
+												<clipPath id="c-happy">
+													<ellipse cx="0" cy="14" rx="34" ry="39" />
+													<circle cx="0" cy="-38" r="28" />
+												</clipPath>
+											</defs>
+											<g clip-path="url(#c-happy)">
+												<path
+													d="M-6 -63 L-4 -55 M0 -64 L0 -55 M6 -63 L4 -55 M-31 4 L-23 6 M-32 15 L-24 16 M31 4 L23 6 M32 15 L24 16"
+													fill="none"
+													stroke="#a85a24"
+													stroke-width="2.6"
+													stroke-linecap="round"
+												/>
+											</g>
+											<ellipse cx="0" cy="24" rx="15" ry="22" fill="#f7e9d2" />
+											<ellipse cx="-13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="0" cy="-30" rx="10" ry="7" fill="#f7e9d2" />
+											<polygon points="-3,-35 3,-35 0,-31" fill="#c4787a" />
+											<path
+												d="M-12 -41 Q-9 -46 -6 -41 M6 -41 Q9 -46 12 -41"
+												stroke="#2a1a10"
+												stroke-width="2.2"
+												fill="none"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M-4 -29 Q0 -26 4 -29"
+												stroke="#7a3a22"
+												stroke-width="1.8"
+												fill="none"
+												stroke-linecap="round"
+											/>
+										</g>
+									</svg>
+								</div>
+								<div class="bubble lt">
+									<p>A future doctor with a golden retriever called Kara? I like you already.</p>
+								</div>
+							</div>
+							<div class="facts left">
+								<span class="fact" style="--d: 0"
+									><svg
+										class="ico"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#f2b66b"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+										<circle cx="12" cy="7" r="4" /></svg
+									><span>Goes by Ece</span
+									><b aria-label="Forget"
+										><svg
+											class="ico"
+											width="12"
+											height="12"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="#8e96a5"
+											stroke-width="2.4"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path d="M18 6 6 18" />
+											<path d="m6 6 12 12" /></svg></b></span
+								><span class="fact" style="--d: 1"
+									><svg
+										class="ico"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#f2b66b"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path
+											d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+										/>
+										<path d="M22 10v6" />
+										<path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg
+									><span>Studies medicine</span
+									><b aria-label="Forget"
+										><svg
+											class="ico"
+											width="12"
+											height="12"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="#8e96a5"
+											stroke-width="2.4"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path d="M18 6 6 18" />
+											<path d="m6 6 12 12" /></svg></b></span
+								><span class="fact" style="--d: 2"
+									><svg
+										class="ico"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#f2b66b"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path
+											d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+										/>
+										<circle cx="12" cy="10" r="3" /></svg
+									><span>Lives in Istanbul</span
+									><b aria-label="Forget"
+										><svg
+											class="ico"
+											width="12"
+											height="12"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="#8e96a5"
+											stroke-width="2.4"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path d="M18 6 6 18" />
+											<path d="m6 6 12 12" /></svg></b></span
+								><span class="fact" style="--d: 3"
+									><svg
+										class="ico"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#f2b66b"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<circle cx="11" cy="4" r="2" />
+										<circle cx="18" cy="8" r="2" />
+										<circle cx="20" cy="16" r="2" />
+										<path
+											d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"
+										/></svg
+									><span>Golden retriever, Kara</span
+									><b aria-label="Forget"
+										><svg
+											class="ico"
+											width="12"
+											height="12"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="#8e96a5"
+											stroke-width="2.4"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path d="M18 6 6 18" />
+											<path d="m6 6 12 12" /></svg></b></span
+								><span class="fact" style="--d: 4"
+									><svg
+										class="ico"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#f2b66b"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path
+											d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"
+										/></svg
+									><span>Loves painting</span
+									><b aria-label="Forget"
+										><svg
+											class="ico"
+											width="12"
+											height="12"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="#8e96a5"
+											stroke-width="2.4"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path d="M18 6 6 18" />
+											<path d="m6 6 12 12" /></svg></b></span
+								><span class="fact arriving" style="--d: 5"
+									><svg
+										class="ico"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#f2b66b"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M8 2v4" />
+										<path d="M16 2v4" />
+										<rect width="18" height="18" x="3" y="4" rx="2" />
+										<path d="M3 10h18" /></svg
+									><span>Anatomy exam · Friday</span
+									><b aria-label="Forget"
+										><svg
+											class="ico"
+											width="12"
+											height="12"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="#8e96a5"
+											stroke-width="2.4"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path d="M18 6 6 18" />
+											<path d="m6 6 12 12" /></svg></b
+								></span>
+							</div>
+							<div class="bottom">
+								<button class="primary">
+									Go home
+									<svg
+										class="ico"
+										width="18"
+										height="18"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#131b2e"
+										stroke-width="2.2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M5 12h14" />
+										<path d="m12 5 7 7-7 7" />
+									</svg>
+								</button>
+								<p class="consent">See or forget these anytime on Mochi's page.</p>
+							</div>
+						</div>
+					</div>
+					<figcaption>
+						<span class="num">5 · Result</span>
+						<h3>The 'it remembers me' moment</h3>
+						<p>
+							Mochi's line names what it heard; the facts pop in one by one (≈140 ms apart) with
+							their icon, each with ✕ to forget it. Go home. A success haptic as the first chip
+							lands.
+						</p>
+					</figcaption>
+				</figure>
+				<figure class="state">
+					<div class="phwrap">
+						<div class="phone" style="">
+							<div class="status">
+								<span>9:41</span><span class="notch"></span><span class="bat"></span>
+							</div>
+							<button class="skip">Skip</button>
+							<div class="headA">
+								<p class="eyebrow">Hmm</p>
+								<h2 class="serif sm">Mochi didn't catch much</h2>
+							</div>
+							<div class="stageA">
+								<div class="glow"></div>
+								<div class="bubble tr wide">
+									<p>Tell me more about you sometime! Your name, what you do, who you love?</p>
+								</div>
+								<div class="pet" style="width: 170px; height: 170px">
+									<svg viewBox="0 0 200 200" aria-hidden="true">
+										<ellipse cx="96" cy="185" rx="46" ry="6" fill="#000" opacity="0.35" />
+										<g transform="translate(96 118) scale(1.25)">
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#fbf1e0"
+												stroke-width="20"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="0"
+												cy="14"
+												rx="32"
+												ry="37"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="-13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="-24,-48 -19,-77 -3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="24,-48 19,-77 3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<circle
+												cx="0"
+												cy="-38"
+												r="26"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#e3914a"
+												stroke-width="10"
+												stroke-linecap="round"
+											/>
+											<ellipse cx="0" cy="14" rx="32" ry="37" fill="#e3914a" />
+											<polygon points="-24,-48 -19,-77 -3,-60" fill="#e3914a" />
+											<polygon points="24,-48 19,-77 3,-60" fill="#e3914a" />
+											<polygon points="-20,-52 -18,-70 -8,-58" fill="#c96f3a" />
+											<polygon points="20,-52 18,-70 8,-58" fill="#c96f3a" />
+											<circle cx="0" cy="-38" r="26" fill="#e3914a" />
+											<defs>
+												<clipPath id="c-content">
+													<ellipse cx="0" cy="14" rx="34" ry="39" />
+													<circle cx="0" cy="-38" r="28" />
+												</clipPath>
+											</defs>
+											<g clip-path="url(#c-content)">
+												<path
+													d="M-6 -63 L-4 -55 M0 -64 L0 -55 M6 -63 L4 -55 M-31 4 L-23 6 M-32 15 L-24 16 M31 4 L23 6 M32 15 L24 16"
+													fill="none"
+													stroke="#a85a24"
+													stroke-width="2.6"
+													stroke-linecap="round"
+												/>
+											</g>
+											<ellipse cx="0" cy="24" rx="15" ry="22" fill="#f7e9d2" />
+											<ellipse cx="-13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="0" cy="-30" rx="10" ry="7" fill="#f7e9d2" />
+											<polygon points="-3,-35 3,-35 0,-31" fill="#c4787a" />
+											<circle cx="-9" cy="-42" r="3" fill="#2a1a10" />
+											<circle cx="9" cy="-42" r="3" fill="#2a1a10" />
+										</g>
+									</svg>
+								</div>
+							</div>
+							<div class="bottom">
+								<button class="primary">Try once more</button
+								><button class="secondary">Maybe later</button>
+							</div>
+						</div>
+					</div>
+					<figcaption>
+						<span class="num">6 · Nothing caught</span>
+						<h3>Kept nothing</h3>
+						<p>
+							The pet asks for more, kindly. Try once more (the second and last attempt) or Maybe
+							later, which ends the step.
+						</p>
+					</figcaption>
+				</figure>
+				<figure class="state">
+					<div class="phwrap">
+						<div class="phone" style="">
+							<div class="status">
+								<span>9:41</span><span class="notch"></span><span class="bat"></span>
+							</div>
+							<div class="headA">
+								<p class="eyebrow">Not now</p>
+								<h2 class="serif sm">Mochi will ask you later</h2>
+							</div>
+							<div class="stageA">
+								<div class="glow dim"></div>
+								<div class="bubble tr"><p>I'm a bit sleepy… let's do this later, okay?</p></div>
+								<div class="pet" style="width: 170px; height: 170px">
+									<svg viewBox="0 0 200 200" aria-hidden="true">
+										<ellipse cx="96" cy="185" rx="46" ry="6" fill="#000" opacity="0.35" />
+										<g transform="translate(96 118) scale(1.25)">
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#fbf1e0"
+												stroke-width="20"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="0"
+												cy="14"
+												rx="32"
+												ry="37"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="-13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="-24,-48 -19,-77 -3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="24,-48 19,-77 3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<circle
+												cx="0"
+												cy="-38"
+												r="26"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#e3914a"
+												stroke-width="10"
+												stroke-linecap="round"
+											/>
+											<ellipse cx="0" cy="14" rx="32" ry="37" fill="#e3914a" />
+											<polygon points="-24,-48 -19,-77 -3,-60" fill="#e3914a" />
+											<polygon points="24,-48 19,-77 3,-60" fill="#e3914a" />
+											<polygon points="-20,-52 -18,-70 -8,-58" fill="#c96f3a" />
+											<polygon points="20,-52 18,-70 8,-58" fill="#c96f3a" />
+											<circle cx="0" cy="-38" r="26" fill="#e3914a" />
+											<defs>
+												<clipPath id="c-sleepy">
+													<ellipse cx="0" cy="14" rx="34" ry="39" />
+													<circle cx="0" cy="-38" r="28" />
+												</clipPath>
+											</defs>
+											<g clip-path="url(#c-sleepy)">
+												<path
+													d="M-6 -63 L-4 -55 M0 -64 L0 -55 M6 -63 L4 -55 M-31 4 L-23 6 M-32 15 L-24 16 M31 4 L23 6 M32 15 L24 16"
+													fill="none"
+													stroke="#a85a24"
+													stroke-width="2.6"
+													stroke-linecap="round"
+												/>
+											</g>
+											<ellipse cx="0" cy="24" rx="15" ry="22" fill="#f7e9d2" />
+											<ellipse cx="-13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="0" cy="-30" rx="10" ry="7" fill="#f7e9d2" />
+											<polygon points="-3,-35 3,-35 0,-31" fill="#c4787a" />
+											<path
+												d="M-12 -42 Q-9 -39 -6 -42 M6 -42 Q9 -39 12 -42"
+												stroke="#2a1a10"
+												stroke-width="2.2"
+												fill="none"
+												stroke-linecap="round"
+											/>
+										</g>
+									</svg>
+								</div>
+							</div>
+							<div class="bottom">
+								<button class="primary">
+									Go home
+									<svg
+										class="ico"
+										width="18"
+										height="18"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#131b2e"
+										stroke-width="2.2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path d="M5 12h14" />
+										<path d="m12 5 7 7-7 7" />
+									</svg>
+								</button>
+								<p class="consent">Nothing was used up. Mochi asks again from its page.</p>
+							</div>
+						</div>
+					</div>
+					<figcaption>
+						<span class="num">7 · Not connected</span>
+						<h3>The AI couldn't be reached</h3>
+						<p>
+							No attempt used. Sleepy pet, Go home, and the step is offered again from Mochi's page.
+						</p>
+					</figcaption>
+				</figure>
+				<figure class="state">
+					<div class="phwrap">
+						<div class="phone" style="">
+							<div class="status">
+								<span>9:41</span><span class="notch"></span><span class="bat"></span>
+							</div>
+							<div class="homesky"></div>
+							<div class="homehead">
+								<p class="eyebrow dim">Sunday</p>
+								<h2 class="serif sm">Mochi is happy to see you</h2>
+							</div>
+							<div class="stageA home">
+								<div class="bubble tr wide">
+									<p>I don't know much about you yet. Will you tell me?</p>
+									<div class="brow">
+										<svg
+											class="ico"
+											width="14"
+											height="14"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="#f2b66b"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											aria-hidden="true"
+										>
+											<path
+												d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"
+											/>
+											<path d="M20 2v4" />
+											<path d="M22 4h-4" />
+											<circle cx="4" cy="20" r="2" />
+										</svg>
+										Tell Mochi about you
+									</div>
+								</div>
+								<div class="pet" style="width: 170px; height: 170px">
+									<svg viewBox="0 0 200 200" aria-hidden="true">
+										<ellipse cx="96" cy="185" rx="46" ry="6" fill="#000" opacity="0.35" />
+										<g transform="translate(96 118) scale(1.25)">
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#fbf1e0"
+												stroke-width="20"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="0"
+												cy="14"
+												rx="32"
+												ry="37"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="-13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<ellipse
+												cx="13"
+												cy="48"
+												rx="9"
+												ry="5.5"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="-24,-48 -19,-77 -3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<polygon
+												points="24,-48 19,-77 3,-60"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<circle
+												cx="0"
+												cy="-38"
+												r="26"
+												fill="#fbf1e0"
+												stroke="#fbf1e0"
+												stroke-width="10"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<path
+												d="M26 38 C62 40 66 -4 46 -12"
+												fill="none"
+												stroke="#e3914a"
+												stroke-width="10"
+												stroke-linecap="round"
+											/>
+											<ellipse cx="0" cy="14" rx="32" ry="37" fill="#e3914a" />
+											<polygon points="-24,-48 -19,-77 -3,-60" fill="#e3914a" />
+											<polygon points="24,-48 19,-77 3,-60" fill="#e3914a" />
+											<polygon points="-20,-52 -18,-70 -8,-58" fill="#c96f3a" />
+											<polygon points="20,-52 18,-70 8,-58" fill="#c96f3a" />
+											<circle cx="0" cy="-38" r="26" fill="#e3914a" />
+											<defs>
+												<clipPath id="c-happy">
+													<ellipse cx="0" cy="14" rx="34" ry="39" />
+													<circle cx="0" cy="-38" r="28" />
+												</clipPath>
+											</defs>
+											<g clip-path="url(#c-happy)">
+												<path
+													d="M-6 -63 L-4 -55 M0 -64 L0 -55 M6 -63 L4 -55 M-31 4 L-23 6 M-32 15 L-24 16 M31 4 L23 6 M32 15 L24 16"
+													fill="none"
+													stroke="#a85a24"
+													stroke-width="2.6"
+													stroke-linecap="round"
+												/>
+											</g>
+											<ellipse cx="0" cy="24" rx="15" ry="22" fill="#f7e9d2" />
+											<ellipse cx="-13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="13" cy="48" rx="9" ry="5.5" fill="#e3914a" />
+											<ellipse cx="0" cy="-30" rx="10" ry="7" fill="#f7e9d2" />
+											<polygon points="-3,-35 3,-35 0,-31" fill="#c4787a" />
+											<path
+												d="M-12 -41 Q-9 -46 -6 -41 M6 -41 Q9 -46 12 -41"
+												stroke="#2a1a10"
+												stroke-width="2.2"
+												fill="none"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M-4 -29 Q0 -26 4 -29"
+												stroke="#7a3a22"
+												stroke-width="1.8"
+												fill="none"
+												stroke-linecap="round"
+											/>
+										</g>
+									</svg>
+								</div>
+							</div>
+							<div class="homebar"><span></span><span></span><span></span></div>
+						</div>
+					</div>
+					<figcaption>
+						<span class="num">8 · Pets from before</span>
+						<h3>Offered once on Home</h3>
+						<p>
+							For people who already had a pet: one time, Home's bubble asks, with the bubble's
+							action row opening the step. After that, only from Mochi's page.
+						</p>
+					</figcaption>
+				</figure>
+			</div>
+
+			<h2 class="section">3 · What to decide</h2>
+			<p class="sub">My recommendation is first in each.</p>
+			<div class="decide">
+				<div class="dcard">
+					<h3>Direction</h3>
+					<ol>
+						<li><b>A · Stage</b>, the pet front and centre</li>
+						<li>B · Sky sheet</li>
+						<li>C · Memory slots</li>
+					</ol>
+				</div>
+				<div class="dcard">
+					<h3>Hints while talking</h3>
+					<ol>
+						<li><b>Light up</b> as each topic is said (simple word match on the phone)</li>
+						<li>Stay still, ideas only</li>
+					</ol>
+				</div>
+				<div class="dcard">
+					<h3>Word progress</h3>
+					<ol>
+						<li><b>Ring around the mic + "37 / 60"</b></li>
+						<li>Counter text only, from 45 words (like Home)</li>
+					</ol>
+				</div>
+				<div class="dcard">
+					<h3>Result</h3>
+					<ol>
+						<li><b>Chips pop in one by one</b> under Mochi's line (decided)</li>
+						<li>+ a little confetti of paws on the first chip</li>
+					</ol>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

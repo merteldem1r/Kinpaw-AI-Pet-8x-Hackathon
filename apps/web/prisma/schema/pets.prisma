@@ -1,0 +1,73 @@
+// The pet (Kinpaw): one per account in v1, created on the phone before sign-in and saved after
+// it (docs/application/features/m4-save-your-pet-requirements.md). Deleted with the account.
+//
+// The appearance is species plus nine attributes (fur … trim), drawn in code by the app
+// (features/m4b-pet-builder-requirements.md, v2-pet-looks-requirements.md). `look` is the ready-made look it is exactly, or
+// null for a pet built or customized. All of these, and preset, are text, not enums: the catalog
+// lives in @app/contract (src/v1/appearance.ts, src/v1/pets.ts), and the route validates every
+// write against it, so a new option ships without a migration. The six traits are 1–10, checked
+// by the same contract.
+//
+// The app reaches it only through /api/app/v1/pet. Not expressible here, and kept by the
+// migrations: RLS on with no policies and nothing granted to the API roles.
+model Pet {
+  /// Generated on the phone, so a retried save finds its row.
+  id              String            @id @db.Uuid
+  userId          String            @unique @map("user_id") @db.Uuid
+  species         String
+  fur             String
+  pattern         String
+  eyes            String
+  ears            String
+  body            String
+  tail            String
+  /// The markings' colour: "auto" (the pattern's own) or a fur id. Added with the layered coat.
+  accent          String            @default("auto")
+  /// White markings: "none", "mittens", "socks", "bicolour" or "van".
+  white           String            @default("none")
+  /// Their colour: "white", or a fur id (the builder's "Paws & chest" colour).
+  trim            String            @default("white")
+  /// The ready-made look, or null for a pet built or customized.
+  look            String?
+  name            String
+  preset          String
+  affection       Int
+  playfulness     Int
+  energy          Int
+  curiosity       Int
+  loyalty         Int
+  independence    Int
+  createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime          @default(now()) @map("updated_at") @db.Timestamptz(6)
+  /// When "Tell me about you" ended for good: skipped, kept a fact, or used both attempts (v2).
+  introFinishedAt DateTime?         @map("intro_finished_at") @db.Timestamptz(6)
+  profile         Profile           @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  needs           PetNeeds?
+  talks           PetTalk[]
+  memories        PetMemory[]
+  introAttempts   PetIntroAttempt[]
+
+  @@map("pets")
+}
+
+// The pet's four needs (M5), apart from its identity: the pet is written once when it is saved;
+// its needs change on every Feed, Play and Pet, and every counted talk reply (M6). One row per
+// pet, created with it and deleted with it. Only the care code writes it (POST
+// /api/app/v1/pet/actions and /pet/talk), always within 0–100; the values are as stored at
+// `updated_at`, and decay applies from then (@app/contract, src/v1/needs.ts). Mood is never stored: it is computed
+// from these, so the face always matches the numbers. The defaults are the starting needs
+// (STARTING_NEEDS). Fractional since 2026-10-02 (features/needs-rhythm-requirements.md, R9):
+// whole numbers threw away decay under half a point on every change; people still see whole
+// numbers, rounded by the app. Not expressible here, and kept by the migrations: RLS on with no
+// policies and nothing granted to the API roles.
+model PetNeeds {
+  petId     String   @id @map("pet_id") @db.Uuid
+  hunger    Float    @default(60)
+  happiness Float    @default(80)
+  energy    Float    @default(80)
+  affection Float    @default(70)
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
+  pet       Pet      @relation(fields: [petId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("pet_needs")
+}

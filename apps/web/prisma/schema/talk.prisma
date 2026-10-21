@@ -1,0 +1,58 @@
+// Talking to the pet (M6, docs/application/features/m6-talk-requirements.md). Two tables with
+// two different jobs, kept apart on purpose (decided with Mert, 2026-10-01):
+//
+// - pet_talks is game state: the replies that counted, which the daily limit and the daily caps
+//   are read from. It outlives any change to how AI usage is tracked.
+// - ai_usage is a usage log: one row per model call, failed or not. A stand-in until
+//   template-web's AI usage module is available (docs/memory/ai-usage-stand-in.md); replacing
+//   it never touches the game.
+//
+// Neither ever holds what was said or what the pet replied. Only the talk route writes them,
+// through the server's Prisma client. Not expressible here, and kept by the migrations: RLS on
+// with no policies and nothing granted to the API roles.
+
+// One row per counted reply. The message id is generated on the phone and is the key, so a
+// retried message can never count twice. `happiness_added` and `affection_added` are what the
+// reply actually changed (after the floor and the caps; negative after harsh words); the day's
+// rises are summed for the caps. `local_day` is the person's calendar day when it counted, so the
+// limit resets at their own midnight. `intent` and `input` are text, not enums: their lists live
+// in @app/contract (src/v1/talk.ts). Deleted with the pet.
+model PetTalk {
+  messageId      String   @id @map("message_id") @db.Uuid
+  petId          String   @map("pet_id") @db.Uuid
+  localDay       DateTime @map("local_day") @db.Date
+  intent         String
+  input          String
+  happinessAdded Int      @map("happiness_added")
+  affectionAdded Int      @map("affection_added")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  pet            Pet      @relation(fields: [petId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([petId, localDay])
+  @@map("pet_talks")
+}
+
+// One row per call to the pet's voice: which provider and model, the tokens and time it took,
+// and how it ended ('replied' | 'retried' | 'limit_reached' | 'unavailable' | 'invalid'), with
+// the intent when there was a reply. Usage history outlives the account: the user id is cleared,
+// not the row.
+model AiUsage {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId       String?  @map("user_id") @db.Uuid
+  provider     String
+  model        String
+  inputTokens  Int?     @map("input_tokens")
+  outputTokens Int?     @map("output_tokens")
+  latencyMs    Int      @map("latency_ms")
+  outcome      String
+  intent       String?
+  /// What the call was for: "talk" (a message), "intro" ("Tell me about you", v2) or "photo"
+  /// (a pet read from a photo, v2).
+  purpose      String   @default("talk")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  profile      Profile? @relation(fields: [userId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("ai_usage")
+}

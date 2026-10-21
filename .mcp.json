@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "pulse": {
+      "type": "http",
+      "url": "https://dash.8x.social/api/mcp",
+      "headers": { "Authorization": "Bearer ${PULSE_TOKEN}" }
+    },
+    "8xsend": {
+      "type": "http",
+      "url": "https://8xsend.com/api/mcp",
+      "headers": { "Authorization": "Bearer ${EIGHTXSEND_MANAGE_KEY}" }
+    }
+  }
+}

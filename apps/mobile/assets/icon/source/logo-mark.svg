@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+	<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+		<stop offset="0" stop-color="#1b2748"/><stop offset="1" stop-color="#090f1e"/>
+	</linearGradient></defs><rect width="1024" height="1024" rx="287" fill="url(#sky)"/>
+	<defs><radialGradient id="glow" cx="512" cy="584" r="470" gradientUnits="userSpaceOnUse">
+		<stop offset="0" stop-color="#f2b66b" stop-opacity="0.3"/>
+		<stop offset="0.55" stop-color="#f2b66b" stop-opacity="0.105"/>
+		<stop offset="1" stop-color="#f2b66b" stop-opacity="0"/>
+	</radialGradient></defs>
+	<rect width="1024" height="1024" fill="url(#glow)"/><g transform="translate(512 540) scale(0.86) translate(-512 -584)">
+	<path d="M 306 410 L 316 256 L 416 328 Z" fill="#f2b66b" stroke="#f2b66b" stroke-width="40" stroke-linejoin="round"/><path d="M 718 410 L 708 256 L 608 328 Z" fill="#f2b66b" stroke="#f2b66b" stroke-width="40" stroke-linejoin="round"/>
+	<circle cx="512" cy="584" r="270" fill="#f2b66b"/>
+	
+	<g fill="none" stroke="#131b2e" stroke-width="26" stroke-linecap="round">
+		<path d="M 366 600 Q 418 648 470 600"/>
+		<path d="M 554 600 Q 606 648 658 600"/>
+	</g></g></svg>

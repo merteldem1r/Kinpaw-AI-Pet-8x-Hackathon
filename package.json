@@ -1,0 +1,60 @@
+{
+	"name": "ai-pet-companion",
+	"version": "0.1.0",
+	"private": true,
+	"description": "AI pet companion app (8x Playmakers hackathon)",
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"scripts": {
+		"mobile": "npm run --workspace=@app/mobile",
+		"mobile:start": "npm run start --workspace=@app/mobile",
+		"mobile:ios": "npm run ios --workspace=@app/mobile",
+		"mobile:ios:device": "npm run ios --workspace=@app/mobile -- --device",
+		"mobile:android": "npm run android --workspace=@app/mobile",
+		"mobile:test": "npm test --workspace=@app/mobile --",
+		"web": "npm run --workspace=@app/web",
+		"web:dev": "npm run dev --workspace=@app/web",
+		"web:build": "npm run build --workspace=@app/web",
+		"web:start": "npm run start --workspace=@app/web",
+		"web:test": "npm test --workspace=@app/web",
+		"check:env": "node scripts/check-env-vars.mjs",
+		"typecheck": "npm run typecheck --workspace=@app/web && npm run typecheck --workspace=@app/mobile && npm run typecheck --workspace=@app/contract && npm run typecheck --workspace=@app/brand",
+		"lint": "eslint . --max-warnings=0",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"test": "node --test scripts/*.test.mjs && npm run mobile:test -- --passWithNoTests && npm run test --workspace=@app/web --if-present && npm run test --workspace=@app/contract",
+		"check:events": "node scripts/check-events.mjs",
+		"check:rls": "node scripts/check-rls.mjs",
+		"check:secrets": "node scripts/check-secrets.mjs --all",
+		"check:standards": "node scripts/check-standards.mjs",
+		"check:store": "node scripts/check-store-readiness.mjs",
+		"check:template": "node scripts/check-template-clean.mjs",
+		"logs:backfill": "python3 .claude/log-session.py --backfill",
+		"db:migrate": "npm run db:migrate --workspace=@app/web",
+		"db:reset": "supabase db reset && npm run db:migrate",
+		"db:run-once": "node scripts/run-once-sql.mjs",
+		"prepare": "git config core.hooksPath .githooks || true"
+	},
+	"engines": {
+		"node": ">=22.18.0"
+	},
+	"devDependencies": {
+		"@eslint/eslintrc": "^3.3.5",
+		"eslint": "^9.39.4",
+		"eslint-config-expo": "~55.0.1",
+		"eslint-config-next": "^15.5.26",
+		"prettier": "^3.9.9",
+		"prettier-plugin-tailwindcss": "^0.8.1"
+	},
+	"allowScripts": {
+		"prisma@6.19.3": true,
+		"@prisma/client@6.19.3": true,
+		"@prisma/engines@6.19.3": true,
+		"unrs-resolver@1.12.2": true,
+		"fsevents@2.3.3": true,
+		"@sentry/cli@2.58.4": true,
+		"@shopify/react-native-skia@2.4.18": true
+	}
+}

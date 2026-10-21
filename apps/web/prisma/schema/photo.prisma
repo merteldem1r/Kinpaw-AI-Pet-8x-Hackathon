@@ -1,0 +1,35 @@
+// Your pet from a photo (v2, docs/application/features/v2-pet-from-photo-requirements.md): one
+// row per photo read, kept only to count reads against the limits (R19–R22). Never the photo,
+// never what the model said about it.
+//
+// - `device_hash`: the phone's install id (made once, kept in its Keychain), as a keyed hash
+//   (HMAC with PHOTO_HASH_SECRET, R23). Set on reads made while creating a pet: 2 per phone,
+//   ever. Null on a redo, which counts by account.
+// - `ip_hash`: the caller's IP address, the same way. At most 6 counted reads per network a day.
+// - `user_id`: set on a redo (Plus, 1 a local day), and on a creation read when signed in.
+// - `local_day`: the day a redo counts against, in the phone's time zone; the UTC day otherwise.
+// - `outcome`: `pending` while the model is asked (it counts, so two reads at once can't both
+//   pass), then `read`, `no_pet`, `several` or `unclear`. A read that failed on our side is
+//   deleted, so it never counts (R17, R20). Text, not an enum: the list is @app/contract's.
+//
+// Written only by the server's photo routes. The account's rows lose their user id when it is
+// deleted (the hashes stay: they can't be traced back, and the phone's limit must survive).
+// Not expressible here, and kept by the migrations: RLS on with no policies and nothing granted
+// to the API roles.
+model PetPhotoRead {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  deviceHash String?  @map("device_hash")
+  ipHash     String   @map("ip_hash")
+  userId     String?  @map("user_id") @db.Uuid
+  context    String
+  localDay   DateTime @map("local_day") @db.Date
+  outcome    String
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  profile    Profile? @relation(fields: [userId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  @@index([deviceHash])
+  @@index([ipHash, createdAt])
+  @@index([userId, localDay])
+  @@index([createdAt])
+  @@map("pet_photo_reads")
+}

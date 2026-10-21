@@ -1,0 +1,15 @@
+{
+	"meet": {
+		"cuddly": "Oh! Hi. I think I like you already.",
+		"curious": "Ooh. What's that? And that? Hi!",
+		"cool": "Nice place. I'll allow it.",
+		"loyal": "You're here. Good. I'm staying close."
+	},
+	"custom": "Oh! Hi. I think I like you already.",
+	"hello": {
+		"cuddly": "Hi! I'm soft, sleepy and all yours.",
+		"curious": "Ooh, what's in there? Can I look?",
+		"cool": "Hey. I'm pretty chill. Mostly.",
+		"loyal": "Wherever you go, I'm coming too."
+	}
+}

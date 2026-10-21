@@ -1,0 +1,14 @@
+# Session transcripts are generated verbatim records — never reformat them.
+# They're tracked on purpose (see CLAUDE.md), so .gitignore doesn't cover them.
+# One directory per agent that writes a committed transcript: Claude Code and
+# Codex (see docs/rules/secrets.md).
+.claude-logs/
+.codex-logs/
+
+# Written by tools that don't run Prettier. Formatting them only means the next
+# npm install or Claude Code permission prompt rewrites them back, and
+# format:check fails on a change nobody made.
+package-lock.json
+.claude/settings.json
+.claude/settings.local.json
+.mcp.json

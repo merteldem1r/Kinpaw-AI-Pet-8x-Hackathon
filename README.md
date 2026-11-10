@@ -158,7 +158,3 @@ scripts/         the check:* gates
 - [`apps/mobile/README.md`](apps/mobile/README.md) and [`apps/web/README.md`](apps/web/README.md):
   how each app is organised.
 - [`AGENTS.md`](AGENTS.md): the rules every contributor and coding agent follows.
-
-## License
-
-Proprietary. © 8x Social
